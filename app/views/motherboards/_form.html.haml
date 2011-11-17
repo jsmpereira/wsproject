@@ -1,0 +1,10 @@
+= form_for @motherboard do |f|
+  -if @motherboard.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@motherboard.errors.count, "error")} prohibited this motherboard from being saved:"
+      %ul
+        - @motherboard.errors.full_messages.each do |msg|
+          %li= msg
+
+  .actions
+    = f.submit 'Save'

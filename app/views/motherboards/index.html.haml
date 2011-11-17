@@ -1,0 +1,26 @@
+=form_tag motherboards_path, :method => :get do
+	=label_tag :search
+	=text_field_tag :q
+	
+	=submit_tag "Search"
+
+%h1 Listing motherboards
+
+%table
+	%tr
+		%th Name
+		%th Item
+		%th Actions
+
+	- @motherboards.each do |motherboard|
+		%tr
+			%td=motherboard.name
+			%td=motherboard.item
+			%td=motherboard.details
+			%td= link_to 'Show', motherboard
+			%td= link_to 'Edit', edit_motherboard_path(motherboard)
+			%td= link_to 'Destroy', motherboard, :confirm => 'Are you sure?', :method => :delete
+
+%br
+
+= link_to 'New Motherboard', new_motherboard_path

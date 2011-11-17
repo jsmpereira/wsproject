@@ -1,0 +1,2 @@
+module MotherboardsHelper
+end
