@@ -4,6 +4,12 @@
 	
 	=submit_tag "Search"
 
+-if @search_total
+	%h3
+		Found
+		=@search_total
+		results.
+
 %h1 Listing motherboards
 
 %table
@@ -16,7 +22,6 @@
 		%tr
 			%td=motherboard.name
 			%td=motherboard.item
-			%td=motherboard.details
 			%td= link_to 'Show', motherboard
 			%td= link_to 'Edit', edit_motherboard_path(motherboard)
 			%td= link_to 'Destroy', motherboard, :confirm => 'Are you sure?', :method => :delete
@@ -24,3 +29,5 @@
 %br
 
 = link_to 'New Motherboard', new_motherboard_path
+
+=paginate @search ? @search : @motherboards

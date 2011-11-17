@@ -4,12 +4,14 @@ class MotherboardsController < ApplicationController
   def index
     
     if params[:q]
-      search = Motherboard.solr_search do
+      @search = Motherboard.search do
         fulltext params[:q]
+        paginate :page => params[:page], :per_page => 10
       end
-      @motherboards = search.results
+      @motherboards = @search.results
+      @search_total = @search.total
     else
-      @motherboards = Motherboard.all
+      @motherboards = Motherboard.page(params[:page]).per(20)
     end
 
     respond_to do |format|
@@ -21,7 +23,7 @@ class MotherboardsController < ApplicationController
   # GET /motherboards/1
   # GET /motherboards/1.json
   def show
-    @motherboard = Motherboard.find(params[:id])
+    @motherboard = Motherboard.find(BSON::ObjectId(params[:id]))
 
     respond_to do |format|
       format.html # show.html.erb
@@ -42,7 +44,7 @@ class MotherboardsController < ApplicationController
 
   # GET /motherboards/1/edit
   def edit
-    @motherboard = Motherboard.find(params[:id])
+    @motherboard = Motherboard.find(BSON::ObjectId(params[:id]))
   end
 
   # POST /motherboards

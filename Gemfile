@@ -24,6 +24,9 @@ gem 'bson_ext'
 gem 'sunspot_mongo'
 gem 'sunspot'
 gem 'sunspot_rails'
+gem "sunspot_with_kaminari"
+
+gem 'kaminari'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

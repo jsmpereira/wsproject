@@ -10,4 +10,5 @@ class Motherboard
     text :item
     text :details
   end
+
 end
