@@ -1,0 +1,17 @@
+%h1 Listing videocards
+
+%table
+  %tr
+    %th
+    %th
+    %th
+
+  - @videocards.each do |videocard|
+    %tr
+      %td= link_to 'Show', videocard
+      %td= link_to 'Edit', edit_videocard_path(videocard)
+      %td= link_to 'Destroy', videocard, :confirm => 'Are you sure?', :method => :delete
+
+%br
+
+= link_to 'New Videocard', new_videocard_path

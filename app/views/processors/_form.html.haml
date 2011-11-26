@@ -1,0 +1,10 @@
+= form_for @processor do |f|
+  -if @processor.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@processor.errors.count, "error")} prohibited this processor from being saved:"
+      %ul
+        - @processor.errors.full_messages.each do |msg|
+          %li= msg
+
+  .actions
+    = f.submit 'Save'

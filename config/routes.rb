@@ -1,4 +1,8 @@
 Wsproject::Application.routes.draw do
+  resources :videocards
+
+  resources :processors
+
   resources :motherboards
 
   # The priority is based upon order of creation:

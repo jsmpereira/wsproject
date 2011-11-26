@@ -3,11 +3,21 @@
 %h1=@motherboard.name
 %h3=@motherboard.item
 
-%ul.details
-	-@motherboard.details.each_pair do |key, value|
-		%li
-			%strong=key
-			=simple_format(value)
+%div.statements
+	%h3 Statements
+
+	-@motherboard_rdf.each do |statement|
+		=statement
+
+-if @motherboard.details
+	%div
+		%ul.details
+			-@motherboard.details.each_pair do |key, value|
+				%li
+					%strong=key
+					=simple_format(value)
+	
+	%br
 
 = link_to 'Edit', edit_motherboard_path(@motherboard)
 \|

@@ -1,0 +1,10 @@
+= form_for @videocard do |f|
+  -if @videocard.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@videocard.errors.count, "error")} prohibited this videocard from being saved:"
+      %ul
+        - @videocard.errors.full_messages.each do |msg|
+          %li= msg
+
+  .actions
+    = f.submit 'Save'

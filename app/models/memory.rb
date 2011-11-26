@@ -1,4 +1,4 @@
-class Motherboard
+class Memory
   include Mongoid::Document
   field :name
   field :item
@@ -10,11 +10,4 @@ class Motherboard
     text :item
     text :details
   end
-  
-  #def after_save
-  #  m = MotherboardRdf.new
-  #  m.name = self.name
-  #  m.item = self.item
-  #  m.save!
-  #end
 end

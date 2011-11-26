@@ -28,6 +28,13 @@ gem "sunspot_with_kaminari"
 
 gem 'kaminari'
 
+gem 'rdf'
+gem 'rdf-rdfxml', :require => 'rdf/rdfxml'
+gem 'rdf-mongo'
+gem 'sparql'
+gem 'sparql-client'
+gem 'spira'
+
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 

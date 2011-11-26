@@ -1,3 +1,6 @@
+require 'rdf'
+require 'rdf/mongo'
+
 class MotherboardsController < ApplicationController
   # GET /motherboards
   # GET /motherboards.json
@@ -24,6 +27,9 @@ class MotherboardsController < ApplicationController
   # GET /motherboards/1.json
   def show
     @motherboard = Motherboard.find(BSON::ObjectId(params[:id]))
+    
+    Spira.add_repository! :hardware, RDF::Mongo::Repository.new
+    @motherboard_rdf = MotherboardRdf.repository.query(:subject => "http://www.semanticweb.org/ontologies/2011/10/Ontology1321532209875.owl/Motherboard##{@motherboard.item}")
 
     respond_to do |format|
       format.html # show.html.erb
