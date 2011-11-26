@@ -188,7 +188,6 @@ DEPENDENCIES
   rdf-rdfxml
   sass-rails (~> 3.1.4)
   sparql
-  sparql-client
   spira
   sunspot
   sunspot_mongo

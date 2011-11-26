@@ -26,7 +26,7 @@ class MotherboardsController < ApplicationController
   # GET /motherboards/1
   # GET /motherboards/1.json
   def show
-    @motherboard = Motherboard.find(BSON::ObjectId(params[:id]))
+    @motherboard = Motherboard.find(params[:id])
     
     Spira.add_repository! :hardware, RDF::Mongo::Repository.new
     @motherboard_rdf = MotherboardRdf.repository.query(:subject => "http://www.semanticweb.org/ontologies/2011/10/Ontology1321532209875.owl/Motherboard##{@motherboard.item}")
@@ -50,7 +50,7 @@ class MotherboardsController < ApplicationController
 
   # GET /motherboards/1/edit
   def edit
-    @motherboard = Motherboard.find(BSON::ObjectId(params[:id]))
+    @motherboard = Motherboard.find(params[:id])
   end
 
   # POST /motherboards

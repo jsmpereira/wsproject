@@ -1,0 +1,24 @@
+!!!
+%html{:lang => "en"}
+	%head
+		%meta{'http-equiv' => "Content-Type", :content => "text/html; charset=ISO-8859-1"}
+		%title WS Project
+		= stylesheet_link_tag "application"
+		= javascript_include_tag "application"
+		= csrf_meta_tags
+
+	%body
+		%div#menu
+			%ul
+				%li=link_to "Motherboards", motherboards_path
+				%li=link_to "Processors", processors_path
+				%li=link_to "Video Cards", videocards_path
+				%li=link_to "Memory", memories_path
+				%li
+					=form_tag polymorphic_path(params[:controller]), :method => :get do
+						=label_tag :search
+						=text_field_tag :q
+					
+						=submit_tag "Search"
+	
+		%div#main= yield

@@ -1,6 +1,18 @@
 %p#notice= notice
 
+%h1=@processor.name
+%h3=@processor.item
 
-= link_to 'Edit', edit_processor_path(@processor)
-\|
-= link_to 'Back', processors_path
+%div.statements
+	%h3 Statements
+
+	-@processor_rdf.each do |statement|
+		=statement
+
+-if @processor.details
+	%div
+		%ul.details
+			-@processor.details.each_pair do |key, value|
+				%li
+					%strong=key
+					=simple_format(value)

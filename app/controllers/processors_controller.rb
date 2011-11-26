@@ -2,7 +2,17 @@ class ProcessorsController < ApplicationController
   # GET /processors
   # GET /processors.json
   def index
-    @processors = Processor.all
+    
+    if params[:q]
+      @search = Processor.search do
+        fulltext params[:q]
+        paginate :page => params[:page], :per_page => 10
+      end
+      @processors = @search.results
+      @search_total = @search.total
+    else
+      @processors = Processor.page(params[:page]).per(20)
+    end
 
     respond_to do |format|
       format.html # index.html.erb
@@ -14,6 +24,9 @@ class ProcessorsController < ApplicationController
   # GET /processors/1.json
   def show
     @processor = Processor.find(params[:id])
+
+    Spira.add_repository! :hardware, RDF::Mongo::Repository.new
+    @processor_rdf = ProcessorRdf.repository.query(:subject => "http://www.semanticweb.org/ontologies/2011/10/Ontology1321532209875.owl/Processor##{@processor.item}")
 
     respond_to do |format|
       format.html # show.html.erb

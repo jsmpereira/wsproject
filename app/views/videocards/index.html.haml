@@ -1,17 +1,20 @@
+-if @search_total
+	%h3
+		Found
+		=@search_total
+		results.
+
 %h1 Listing videocards
 
 %table
-  %tr
-    %th
-    %th
-    %th
+	%tr
+		%th
+		%th
+		%th
 
-  - @videocards.each do |videocard|
-    %tr
-      %td= link_to 'Show', videocard
-      %td= link_to 'Edit', edit_videocard_path(videocard)
-      %td= link_to 'Destroy', videocard, :confirm => 'Are you sure?', :method => :delete
+	- @videocards.each do |videocard|
+		%tr
+			%td=link_to videocard.name, videocard
+			%td= videocard.item
 
-%br
-
-= link_to 'New Videocard', new_videocard_path
+=paginate @search ? @search : @videocards

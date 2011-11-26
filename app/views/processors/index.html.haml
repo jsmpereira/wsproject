@@ -1,17 +1,20 @@
+-if @search_total
+	%h3
+		Found
+		=@search_total
+		results.
+
 %h1 Listing processors
 
 %table
-  %tr
-    %th
-    %th
-    %th
+	%tr
+		%th
+		%th
+		%th
 
-  - @processors.each do |processor|
-    %tr
-      %td= link_to 'Show', processor
-      %td= link_to 'Edit', edit_processor_path(processor)
-      %td= link_to 'Destroy', processor, :confirm => 'Are you sure?', :method => :delete
+	- @processors.each do |processor|
+		%tr
+			%td=link_to processor.name, processor
+			%td= processor.item
 
-%br
-
-= link_to 'New Processor', new_processor_path
+=paginate @search ? @search : @processors

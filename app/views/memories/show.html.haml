@@ -1,0 +1,18 @@
+%p#notice= notice
+
+%h1=@memory.name
+%h3=@memory.item
+
+%div.statements
+	%h3 Statements
+
+	-@memory_rdf.each do |statement|
+		=statement
+
+-if @memory.details
+	%div
+		%ul.details
+			-@memory.details.each_pair do |key, value|
+				%li
+					%strong=key
+					=simple_format(value)

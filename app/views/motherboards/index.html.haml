@@ -1,9 +1,3 @@
-=form_tag motherboards_path, :method => :get do
-	=label_tag :search
-	=text_field_tag :q
-	
-	=submit_tag "Search"
-
 -if @search_total
 	%h3
 		Found
@@ -20,14 +14,7 @@
 
 	- @motherboards.each do |motherboard|
 		%tr
-			%td=motherboard.name
+			%td=link_to motherboard.name, motherboard
 			%td=motherboard.item
-			%td= link_to 'Show', motherboard
-			%td= link_to 'Edit', edit_motherboard_path(motherboard)
-			%td= link_to 'Destroy', motherboard, :confirm => 'Are you sure?', :method => :delete
-
-%br
-
-= link_to 'New Motherboard', new_motherboard_path
 
 =paginate @search ? @search : @motherboards

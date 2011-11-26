@@ -1,0 +1,10 @@
+= form_for @memory do |f|
+  -if @memory.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@memory.errors.count, "error")} prohibited this memory from being saved:"
+      %ul
+        - @memory.errors.full_messages.each do |msg|
+          %li= msg
+
+  .actions
+    = f.submit 'Save'

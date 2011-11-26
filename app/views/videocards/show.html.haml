@@ -1,6 +1,18 @@
 %p#notice= notice
 
+%h1=@videocard.name
+%h3=@videocard.item
 
-= link_to 'Edit', edit_videocard_path(@videocard)
-\|
-= link_to 'Back', videocards_path
+%div.statements
+	%h3 Statements
+
+	-@videocard_rdf.each do |statement|
+		=statement
+
+-if @videocard.details
+	%div
+		%ul.details
+			-@videocard.details.each_pair do |key, value|
+				%li
+					%strong=key
+					=simple_format(value)

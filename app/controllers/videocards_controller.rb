@@ -2,7 +2,17 @@ class VideocardsController < ApplicationController
   # GET /videocards
   # GET /videocards.json
   def index
-    @videocards = Videocard.all
+    
+    if params[:q]
+      @search = Videocard.search do
+        fulltext params[:q]
+        paginate :page => params[:page], :per_page => 10
+      end
+      @videocards = @search.results
+      @search_total = @search.total
+    else
+      @videocards = Videocard.page(params[:page]).per(20)
+    end
 
     respond_to do |format|
       format.html # index.html.erb
@@ -14,6 +24,9 @@ class VideocardsController < ApplicationController
   # GET /videocards/1.json
   def show
     @videocard = Videocard.find(params[:id])
+    
+    Spira.add_repository! :hardware, RDF::Mongo::Repository.new
+    @videocard_rdf = VideocardRdf.repository.query(:subject => "http://www.semanticweb.org/ontologies/2011/10/Ontology1321532209875.owl/VideoCard##{@videocard.item}")
 
     respond_to do |format|
       format.html # show.html.erb
