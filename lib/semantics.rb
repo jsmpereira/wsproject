@@ -5,6 +5,9 @@ module Semantics
   class Database
     def initialize
       @repo = RDF::Mongo::Repository.new
+    end
+    
+    def load_ontology
       @repo.load '/Users/josesantos/Documents/LEI/WS/project/hardware.owl'
     end
     
