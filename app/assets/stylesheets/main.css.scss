@@ -1,3 +1,7 @@
+body {
+	margin: 2em;
+}
+
 #menu {
 	border: 1px solid #999;
 	li {display: inline}
@@ -22,5 +26,9 @@ ul.details {
 	float: none;
 	border: 1px solid;
 	padding: 1em;
-	font-size: 11px;
+	p {font-size: 10px}
+}
+
+.none {
+	display: none;
 }

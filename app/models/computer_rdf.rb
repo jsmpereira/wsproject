@@ -1,7 +1,7 @@
 class ComputerRdf
   include Spira::Resource
   
-  base_uri "http://www.semanticweb.org/ontologies/2011/10/Ontology1321532209875.owl"
+  base_uri "http://www.semanticweb.org/ontologies/2011/10/Ontology1321532209875.owl#Computer"
   type RDF::URI("Computer")
   
   default_vocabulary URI.new('http://www.semanticweb.org/ontologies/2011/10/Ontology1321532209875.owl')

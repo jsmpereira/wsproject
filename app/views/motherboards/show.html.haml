@@ -3,11 +3,13 @@
 %h1=@motherboard.name
 %h3=@motherboard.item
 
-%div.statements
-	%h3 Statements
+=link_to 'statements', "", :class => 'toggle'
 
-	-@motherboard_rdf.each do |statement|
-		=statement
+%div.statements.none
+	%h3 Statements
+	
+	-@motherboard_rdf.each do |solution|
+		%p=solution.inspect
 
 -if @motherboard.details
 	%div

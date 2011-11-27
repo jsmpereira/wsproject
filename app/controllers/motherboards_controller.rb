@@ -26,8 +26,8 @@ class MotherboardsController < ApplicationController
   def show
     @motherboard = Motherboard.find(params[:id])
     
-    Spira.add_repository! :hardware, RDF::Mongo::Repository.new
-    @motherboard_rdf = MotherboardRdf.repository.query(:subject => "http://www.semanticweb.org/ontologies/2011/10/Ontology1321532209875.owl/Motherboard##{@motherboard.item}")
+    Spira.add_repository! :hardware, RDF::Repository.new << RDF::Mongo::Repository.new
+    @motherboard_rdf = SPARQL.execute("SELECT * WHERE { <#{MotherboardRdf.for(@motherboard.item).subject.to_s}> ?p ?o }", MotherboardRdf.repository)
 
     respond_to do |format|
       format.html # show.html.erb

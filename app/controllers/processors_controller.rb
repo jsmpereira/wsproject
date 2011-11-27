@@ -26,8 +26,8 @@ class ProcessorsController < ApplicationController
   def show
     @processor = Processor.find(params[:id])
 
-    Spira.add_repository! :hardware, RDF::Mongo::Repository.new
-    @processor_rdf = ProcessorRdf.repository.query(:subject => "http://www.semanticweb.org/ontologies/2011/10/Ontology1321532209875.owl/Processor##{@processor.item}")
+    Spira.add_repository! :hardware, RDF::Repository.new << RDF::Mongo::Repository.new
+    @processor_rdf = SPARQL.execute("SELECT * WHERE { <#{ProcessorRdf.for(@processor.item).subject.to_s}> ?p ?o }", ProcessorRdf.repository)
 
     respond_to do |format|
       format.html # show.html.erb

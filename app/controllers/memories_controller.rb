@@ -26,8 +26,8 @@ class MemoriesController < ApplicationController
   def show
     @memory = Memory.find(params[:id])
     
-    Spira.add_repository! :hardware, RDF::Mongo::Repository.new
-    @memory_rdf = MemoryRdf.repository.query(:subject => "http://www.semanticweb.org/ontologies/2011/10/Ontology1321532209875.owl/Memory##{@memory.item}")
+    Spira.add_repository! :hardware, RDF::Repository.new << RDF::Mongo::Repository.new
+    @memory_rdf = SPARQL.execute("SELECT * WHERE { <#{MemoryRdf.for(@memory.item).subject.to_s}> ?p ?o }", MemoryRdf.repository)
 
     respond_to do |format|
       format.html # show.html.erb

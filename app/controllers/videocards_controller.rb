@@ -26,8 +26,8 @@ class VideocardsController < ApplicationController
   def show
     @videocard = Videocard.find(params[:id])
     
-    Spira.add_repository! :hardware, RDF::Mongo::Repository.new
-    @videocard_rdf = VideocardRdf.repository.query(:subject => "http://www.semanticweb.org/ontologies/2011/10/Ontology1321532209875.owl/VideoCard##{@videocard.item}")
+    Spira.add_repository! :hardware, RDF::Repository.new << RDF::Mongo::Repository.new
+    @videocard_rdf = SPARQL.execute("SELECT * WHERE { <#{VideocardRdf.for(@videocard.item).subject.to_s}> ?p ?o }", VideocardRdf.repository)
 
     respond_to do |format|
       format.html # show.html.erb

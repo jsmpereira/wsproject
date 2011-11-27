@@ -19,7 +19,7 @@ module Semantics
       
       Motherboard.all.each do |m|
         
-        mr = MotherboardRdf.for("Motherboard##{m.item}")
+        mr = MotherboardRdf.for(m.item)
         mr.update(:modelName => m.name,
                   :brand => m.details['Brand'],
                   :cpuSocket => m.details['CPU Socket Type'],
@@ -29,7 +29,7 @@ module Semantics
       end
       
       Processor.all.each do |p|
-        pr = ProcessorRdf.for("Processor##{p.item}")
+        pr = ProcessorRdf.for(p.item)
         pr.update(:modelName => p.name,
                   :brand => p.details['Brand'],
                   :cpuSocket => p.details['CPU Socket Type'])
@@ -37,7 +37,7 @@ module Semantics
       end
       
       Videocard.all.each do |v|
-        vr = VideocardRdf.for("VideoCard##{v.item}")
+        vr = VideocardRdf.for(v.item)
         vr.update(:modelName => v.name,
                   :brand => v.details['Brand'],
                   :graphSlot => v.details['Interface'])
@@ -45,7 +45,7 @@ module Semantics
       end
       
       Memory.all.each do |m|
-        mr = MemoryRdf.for("Memory##{m.item}")
+        mr = MemoryRdf.for(m.item)
         mr.update(:modelName => m.name,
                   :brand => m.details['Brand'],
                   :capacity => m.details['Capacity'],

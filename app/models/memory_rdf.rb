@@ -2,7 +2,7 @@ require 'rdf/mongo'
 class MemoryRdf
   include Spira::Resource
   
-  base_uri "http://www.semanticweb.org/ontologies/2011/10/Ontology1321532209875.owl"
+  base_uri "http://www.semanticweb.org/ontologies/2011/10/Ontology1321532209875.owl#Memory"
   type RDF::URI("Memory")
   
   default_vocabulary URI.new('http://www.semanticweb.org/ontologies/2011/10/Ontology1321532209875.owl')
