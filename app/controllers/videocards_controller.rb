@@ -6,12 +6,13 @@ class VideocardsController < ApplicationController
     if params[:q]
       @search = Videocard.search do
         fulltext params[:q]
-        paginate :page => params[:page], :per_page => 10
+        order_by :name, :asc
+        paginate :page => params[:page], :per_page => 20
       end
       @videocards = @search.results
       @search_total = @search.total
     else
-      @videocards = Videocard.page(params[:page]).per(20)
+      @videocards = Videocard.asc(:name).page(params[:page]).per(20)
     end
 
     respond_to do |format|

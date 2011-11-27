@@ -1,6 +1,3 @@
-require 'rdf'
-require 'rdf/mongo'
-
 class MotherboardsController < ApplicationController
   # GET /motherboards
   # GET /motherboards.json
@@ -9,12 +6,13 @@ class MotherboardsController < ApplicationController
     if params[:q]
       @search = Motherboard.search do
         fulltext params[:q]
-        paginate :page => params[:page], :per_page => 10
+        order_by :name, :asc
+        paginate :page => params[:page], :per_page => 20
       end
       @motherboards = @search.results
       @search_total = @search.total
     else
-      @motherboards = Motherboard.page(params[:page]).per(20)
+      @motherboards = Motherboard.asc(:name).page(params[:page]).per(20)
     end
 
     respond_to do |format|

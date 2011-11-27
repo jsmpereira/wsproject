@@ -6,6 +6,7 @@ class Videocard
   
   include Sunspot::Mongo
   searchable do
+    string :name
     text :name
     text :item
     text :details

@@ -6,12 +6,13 @@ class MemoriesController < ApplicationController
     if params[:q]
       @search = Memory.search do
         fulltext params[:q]
-        paginate :page => params[:page], :per_page => 10
+        order_by :name, :asc
+        paginate :page => params[:page], :per_page => 20
       end
       @memories = @search.results
       @search_total = @search.total
     else
-      @memories = Memory.page(params[:page]).per(20)
+      @memories = Memory.asc(:name).page(params[:page]).per(20)
     end
 
     respond_to do |format|

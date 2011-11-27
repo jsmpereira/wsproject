@@ -6,12 +6,13 @@ class ProcessorsController < ApplicationController
     if params[:q]
       @search = Processor.search do
         fulltext params[:q]
-        paginate :page => params[:page], :per_page => 10
+        order_by :name, :asc
+        paginate :page => params[:page], :per_page => 20
       end
       @processors = @search.results
       @search_total = @search.total
     else
-      @processors = Processor.page(params[:page]).per(20)
+      @processors = Processor.asc(:name).page(params[:page]).per(20)
     end
 
     respond_to do |format|
