@@ -3,18 +3,23 @@
 %h1=@processor.name
 %h3=@processor.item
 
+=image_tag "http://images17.newegg.com/is/image/newegg/20-148-482-Z01?$S300W$", :class => 'pic'
+
 =link_to 'statements', "", :class => 'toggle'
 
 %div.statements.none
 	%h3 Statements
+	
+	%p
+		%strong="SELECT * WHERE { <#{ProcessorRdf.for(@processor.item).subject.to_s}> ?p ?o }"
 
 	-@processor_rdf.each do |solution|
 		%p=solution.inspect
 
 -if @processor.details
 	%div
-		%ul.details
+		%table#details
 			-@processor.details.each_pair do |key, value|
-				%li
-					%strong=key
-					=simple_format(value)
+				%tr
+					%td=key
+					%td=simple_format(value)

@@ -1,4 +1,4 @@
-class Videocard
+class Videocard < Hardware
   include Mongoid::Document
   field :name
   field :item

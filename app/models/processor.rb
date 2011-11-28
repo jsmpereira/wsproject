@@ -1,4 +1,4 @@
-class Processor
+class Processor < Hardware
   include Mongoid::Document
   field :name
   field :item

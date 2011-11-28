@@ -2,18 +2,17 @@
 	%h3
 		Found
 		=@search_total
-		results.
+		results  for
+		%u=params[:q]
 
 %h1 Listing videocards
 
-%table
-	%tr
-		%th
-		%th
-		%th
-
+=paginate @search ? @search : @videocards
+%table#listing
 	- @videocards.each do |videocard|
 		%tr
+			%td=image_tag "http://images17.newegg.com/is/image/newegg/20-148-482-Z01?$S300W$", :class => 'thumb'
+			%td=videocard.brand
 			%td=link_to videocard.name, videocard
 			%td= videocard.item
 

@@ -1,4 +1,4 @@
-class Memory
+class Memory < Hardware
   include Mongoid::Document
   field :name
   field :item
