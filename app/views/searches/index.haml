@@ -1,0 +1,19 @@
+.half
+
+	%h2 SPARQL	
+	
+	=form_tag searches_path, :method => :get do
+		=text_area_tag :query, params[:query]
+		
+		%p
+			=submit_tag "Clear", :onclick => '$("#query").val(""); return false;'
+			=submit_tag "Submit"
+
+-if @results
+	.half
+		%h2
+			Results
+			="(#{@results.size})"
+		
+		-@results.each do |solution|
+			%p=solution.inspect
