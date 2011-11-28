@@ -11,7 +11,7 @@
 %table#listing
 	- @memories.each do |memory|
 		%tr
-			%td=image_tag "http://images17.newegg.com/is/image/newegg/20-148-482-Z01?$S300W$", :class => 'thumb'
+			%td=image_tag memory.image, :class => 'thumb'
 			%td=memory.brand
 			%td=link_to memory.name, memory
 			%td=memory.item
