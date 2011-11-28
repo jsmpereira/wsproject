@@ -1,19 +1,16 @@
-.half
+%ul#home
+	%li
+		%span.header=link_to "Find a replacement", ""
+		%p Compatible replacement parts
+	%li
+		%span.header=link_to "Get a Computer", ""
+		%p New or from parts you already have
+	%li
+		%span.header=link_to "Browse our database", ""
+		%p Find what you want
 
-	%h2 SPARQL	
+#search
+	=form_tag polymorphic_path(params[:controller]), :method => :get do
+		=default_text_field :q, "I want to replace my xpto video card..."
 	
-	=form_tag searches_path, :method => :get do
-		=text_area_tag :query, params[:query]
-		
-		%p
-			=submit_tag "Clear", :onclick => '$("#query").val(""); return false;'
-			=submit_tag "Submit"
-
--if @results
-	.half
-		%h2
-			Results
-			="(#{@results.size})"
-		
-		-@results.each do |solution|
-			%p=solution.inspect
+		=submit_tag "Submit"

@@ -16,9 +16,11 @@ a {
 		background-color: #000;}
 }
 
-.half {width: 46%; border: 1px solid #999; float: left; margin-right: 1em; padding: 1em}
+.half {
+	width: 46%; float: left; margin-right: 1em; padding: 1em;
+}
 
-input[type="text"] {width: 400px; padding: 0.3em; color: #333; font-weight: bold; font-size: 15px}
+input[type="text"] {width: 400px; padding: 0.3em; color: #C6C1C1; font-weight: bold; font-size: 15px}
 input[type="submit"] {border: 1px solid #999; padding: 0.4em; font-weight: bold; font-size: 14px}
 textarea {border: 1px solid #999; width: 500px; height: 200px}
 
@@ -80,7 +82,6 @@ ul.details {
 	padding: 0.5em;
 	margin: 1em;
 	p {font-size: 10px}
-	width: 60%;
 }
 
 .none {
@@ -111,3 +112,15 @@ img.pic {
 	padding: 1em;
 	float: right;
 }
+
+ul#home {
+	margin-left: 13em;
+	.header {font-size: 15px; font-weight: bold}
+	li {display: inline-block; border: 1px solid #999; padding: 1em; margin: 1em; text-align: center}
+}
+
+#search {
+	text-align: center;
+}
+
+#recommendations {margin: 1em; overflow: hidden; float: right}

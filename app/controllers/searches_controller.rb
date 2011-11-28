@@ -1,6 +1,6 @@
 class SearchesController < ApplicationController
   
-  def index
+  def sparql
     
     if params[:query]
       repo = RDF::Repository.new << RDF::Mongo::Repository.new
