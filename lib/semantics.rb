@@ -1,3 +1,4 @@
+
 require 'rdf'
 require 'rdf/mongo'
 
@@ -7,8 +8,8 @@ module Semantics
       @repo = RDF::Mongo::Repository.new
     end
     
-    def load_ontology
-      @repo.load '/Users/josesantos/Documents/LEI/WS/project/hardware.owl'
+    def load_ontology(path)
+      @repo.load path
     end
     
     def repo

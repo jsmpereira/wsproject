@@ -11,7 +11,7 @@
 %table#listing
 	- @motherboards.each do |motherboard|
 		%tr
-			%td=image_tag "http://images17.newegg.com/is/image/newegg/20-148-482-Z01?$S300W$", :class => 'thumb'
+			%td=image_tag motherboard.image, :class => 'thumb'
 			%td=motherboard.brand
 			%td=link_to motherboard.name, motherboard
 			%td=motherboard.item
