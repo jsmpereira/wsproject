@@ -1,4 +1,6 @@
 Wsproject::Application.routes.draw do
+  resources :searches
+  
   resources :memories
 
   resources :videocards
