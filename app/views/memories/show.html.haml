@@ -1,25 +1,36 @@
-%p#notice= notice
-
-%h1=@memory.name
-%h3=@memory.item
-
-=image_tag @memory.image, :class => 'pic'
-
-=link_to 'statements', "", :class => 'toggle'
-
-%div.statements.none
-	%h3 Statements
+.half
+	%p#notice= notice
 	
-	%p
-		%strong="SELECT * WHERE { <#{MemoryRdf.for(@memory.item).subject.to_s}> ?p ?o }"
+	%h1=@memory.name
+	%h3=@memory.item
+	
+	=link_to 'statements', "", :class => 'toggle'
+	
+	%div.statements.none
+		%h3 Statements
+		
+		%p
+			%strong="SELECT * WHERE { <#{MemoryRdf.for(@memory.item).subject.to_s}> ?p ?o }"
+	
+		-@memory_rdf.each do |solution|
+			%p=solution.inspect
+	
+	-if @memory.details
+		%div
+			%table#details
+				-@memory.details.each_pair do |key, value|
+					%tr
+						%td=key
+						%td=simple_format(value)
+					
+.half 
+	=image_tag @memory.image, :class => 'pic'
 
-	-@memory_rdf.each do |solution|
-		%p=solution.inspect
+	#recommendations
+		%h2 Recommendations
 
--if @memory.details
-	%div
-		%table#details
-			-@memory.details.each_pair do |key, value|
+		%table
+			-Memory.limit(3).each do |m|
 				%tr
-					%td=key
-					%td=simple_format(value)
+					%td=image_tag m.image, :class => 'thumb'
+					%td=link_to m.name, m

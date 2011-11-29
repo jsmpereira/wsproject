@@ -1,25 +1,36 @@
-%p#notice= notice
-
-%h1=@motherboard.name
-%h3=@motherboard.item
-
-=image_tag @motherboard.image, :class => 'pic'
-
-=link_to 'statements', "", :class => 'toggle'
-
-%div.statements.none
-	%h3 Statements
+.half
+	%p#notice= notice
 	
-	%p
-		%strong="SELECT * WHERE { <#{MotherboardRdf.for(@motherboard.item).subject.to_s}> ?p ?o }"
+	%h1=@motherboard.name
+	%h3=@motherboard.item
 	
-	-@motherboard_rdf.each do |solution|
-		%p=solution.inspect
-
--if @motherboard.details
-	%div
-		%table#details
-			-@motherboard.details.each_pair do |key, value|
+	=link_to 'statements', "", :class => 'toggle'
+	
+	%div.statements.none
+		%h3 Statements
+		
+		%p
+			%strong="SELECT * WHERE { <#{MotherboardRdf.for(@motherboard.item).subject.to_s}> ?p ?o }"
+		
+		-@motherboard_rdf.each do |solution|
+			%p=solution.inspect
+	
+	-if @motherboard.details
+		%div
+			%table#details
+				-@motherboard.details.each_pair do |key, value|
+					%tr
+						%td=key
+						%td=simple_format(value)
+						
+.half 
+	=image_tag @motherboard.image, :class => 'pic'
+	
+	#recommendations
+		%h2 Recommendations
+			
+		%table
+			-Motherboard.limit(3).each do |m|
 				%tr
-					%td=key
-					%td=simple_format(value)
+					%td=image_tag m.image, :class => 'thumb'
+					%td=link_to m.name, m

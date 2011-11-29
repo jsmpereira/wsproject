@@ -1,25 +1,36 @@
-%p#notice= notice
-
-%h1=@videocard.name
-%h3=@videocard.item
-
-=image_tag @videocard.image, :class => 'pic'
-
-=link_to 'statements', "", :class => 'toggle'
-
-%div.statements.none
-	%h3 Statements
-
-	%p
-		%strong="SELECT * WHERE { <#{VideocardRdf.for(@videocard.item).subject.to_s}> ?p ?o }"
+.half
+	%p#notice= notice
 	
-	-@videocard_rdf.each do |solution|
-		%p=solution.inspect
+	%h1=@videocard.name
+	%h3=@videocard.item
+	
+	=link_to 'statements', "", :class => 'toggle'
+	
+	%div.statements.none
+		%h3 Statements
+	
+		%p
+			%strong="SELECT * WHERE { <#{VideocardRdf.for(@videocard.item).subject.to_s}> ?p ?o }"
+		
+		-@videocard_rdf.each do |solution|
+			%p=solution.inspect
+	
+	-if @videocard.details
+		%div
+		%table#details
+			-@videocard.details.each_pair do |key, value|
+				%tr
+					%td=key
+					%td=simple_format(value)
+				
+.half 
+	=image_tag @videocard.image, :class => 'pic'
 
--if @videocard.details
-	%div
-	%table#details
-		-@videocard.details.each_pair do |key, value|
-			%tr
-				%td=key
-				%td=simple_format(value)
+	#recommendations
+		%h2 Recommendations
+
+		%table
+			-Videocard.limit(3).each do |v|
+				%tr
+					%td=image_tag v.image, :class => 'thumb'
+					%td=link_to v.name, v

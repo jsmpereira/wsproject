@@ -14,6 +14,6 @@
 			%td=image_tag motherboard.image, :class => 'thumb'
 			%td=motherboard.brand
 			%td=link_to motherboard.name, motherboard
-			%td=motherboard.item
+			%td=link_to motherboard.item, "http://www.newegg.com/Product/Product.aspx?Item=#{motherboard.item}", :target => '_blank'
 
 =paginate @search ? @search : @motherboards
