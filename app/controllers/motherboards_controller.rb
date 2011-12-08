@@ -9,8 +9,6 @@ class MotherboardsController < ApplicationController
       brand_filter = with(:brand, params[:brand]) if params[:brand]
       facet :brand, :sort => :count, :exclude => brand_filter
     end
-    
-    #@motherboards = Motherboard.asc(:name).page(params[:page])
 
     respond_to do |format|
       format.html # index.html.erb

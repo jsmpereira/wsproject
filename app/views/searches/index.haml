@@ -3,7 +3,12 @@
 
 	%h1
 		Results for
-		%u=params[:q]
+		%span.query=link_to params[:q], searches_path(:q => params[:q])
+		in
+		-if params[:brand]
+			%span.brand=params[:brand]
+		-if params[:target]
+			=params[:target].pluralize
 		
 	.half
 	
@@ -17,7 +22,7 @@
 				%ul.facet
 					-for row in @motherboards_search.facet(:brand).rows
 						%li
-							= row.value
+							= link_to row.value, searches_path(:q => params[:q], :brand => row.value, :target => 'motherboard')
 							= row.count
 
 			=render :partial => "result", :object => @motherboards
@@ -35,7 +40,7 @@
 				%ul.facet
 					-for row in @processors_search.facet(:brand).rows
 						%li
-							= row.value
+							= link_to row.value, searches_path(:q => params[:q], :brand => row.value, :target => 'processor')
 							= row.count
 				
 			=render :partial => "result", :object => @processors
@@ -55,7 +60,7 @@
 				%ul.facet
 					-for row in @videocards_search.facet(:brand).rows
 						%li
-							= row.value
+							= link_to row.value, searches_path(:q => params[:q], :brand => row.value, :target => 'videocard')
 							= row.count
 				
 			=render :partial => "result", :object => @videocards
@@ -73,7 +78,7 @@
 				%ul.facet
 					-for row in @memories_search.facet(:brand).rows
 						%li
-							= row.value
+							= link_to row.value, searches_path(:q => params[:q], :brand => row.value, :target => 'memory')
 							= row.count
 			
 			=render :partial => "result", :object => @memories
