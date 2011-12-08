@@ -11,21 +11,37 @@
 			%h2
 				Motherboards
 				="(#{@motherboards_search_total})"
-			
+				
+			.facets
+				%h3 Browse by Brand
+				%ul.facet
+					-for row in @motherboards_search.facet(:brand).rows
+						%li
+							= row.value
+							= row.count
+
 			=render :partial => "result", :object => @motherboards
 			=paginate @motherboards_search, :param_name => 'motherboard_page'
-			-if @motherboards.empty?
-				No motherboards found.
+		-if @motherboards && @motherboards.empty?
+			No motherboards found.
 
 		-unless @processors.nil? || @processors.empty? && (@target || @target != "processor")		
 			%h2
 				Processors
 				="(#{@processors_search_total})"
 				
+			.facets
+				%h3 Browse by Brand
+				%ul.facet
+					-for row in @processors_search.facet(:brand).rows
+						%li
+							= row.value
+							= row.count
+				
 			=render :partial => "result", :object => @processors
 			=paginate @processors_search, :param_name => 'processor_page'
-			-if @processors.empty?
-				No processors found.
+		-if @processors && @processors.empty?
+			No processors found.
 
 	.half
 		
@@ -34,20 +50,36 @@
 				Video Cards
 				="(#{@videocards_search_total})"
 				
+			.facets
+				%h3 Browse by Brand
+				%ul.facet
+					-for row in @videocards_search.facet(:brand).rows
+						%li
+							= row.value
+							= row.count
+				
 			=render :partial => "result", :object => @videocards
 			=paginate @videocards_search, :param_name => 'videocard_page'
-			-if @videocards.empty?
-				No videocards found.
+		-if @videocards && @videocards.empty?
+			No videocards found.
 
 		-unless @memories.nil? || @memories.empty? && (@target || @target != "memory")
 			%h2
 				Memories
 				="(#{@memories_search_total})"
 			
+			.facets
+				%h3 Browse by Brand
+				%ul.facet
+					-for row in @memories_search.facet(:brand).rows
+						%li
+							= row.value
+							= row.count
+			
 			=render :partial => "result", :object => @memories
 			=paginate @memories_search, :param_name => 'memory_page'
-			-if @memories.empty?
-				No memories found.
+		-if @memories && @memories.empty?
+			No memories found.
 	
 -else 
 	%ul#home

@@ -9,7 +9,7 @@ development:
     hostname: localhost
     port: 8982
     log_level: INFO
-    solr_jar: '/usr/local/Cellar/solr/3.3.0/libexec/example/start.jar'
+    solr_jar: '/usr/local/Cellar/solr/3.4.0/libexec/example/start.jar'
 
 test:
   solr:

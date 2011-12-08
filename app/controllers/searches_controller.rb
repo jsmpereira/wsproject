@@ -35,6 +35,7 @@ class SearchesController < ApplicationController
         fulltext params[:q]
         order_by :name, :asc
         paginate :page => params[content+"_page".to_s], :per_page => 10
+        facet :brand, :sort => :count
       end
       
       return search, search.results, search.total
