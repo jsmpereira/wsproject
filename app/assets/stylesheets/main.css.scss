@@ -16,9 +16,11 @@ a {
 		background-color: #000;}
 }
 
-.half {
-	width: 46%; float: left; margin-right: 1em; padding: 1em;
-}
+.half, .third, .three-quarters { float: left; margin-right: 1em; padding: 1em; }
+
+.three-quarters { width: 68%; }
+.half { width: 46%; }
+.third { width: 25%; }
 
 input[type="text"] {width: 400px; padding: 0.3em; color: #C6C1C1; font-weight: bold; font-size: 15px}
 input[type="submit"] {border: 1px solid #999; padding: 0.4em; font-weight: bold; font-size: 14px}
@@ -128,3 +130,5 @@ ul#home {
 #recommendations {margin: 1em; overflow: hidden; float: right}
 
 .facets {float:right;}
+
+span.brand {text-decoration: underline; font-style: italic; color: purple}

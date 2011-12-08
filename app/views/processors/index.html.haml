@@ -1,5 +1,19 @@
-%h1 Listing processors
+%h1 
+	Listing processors
+	-if params[:brand]
+		%span.brand=params[:brand]
+	="(#{@processors.total})"
 
-=paginate @processors
-=render :partial => 'searches/result', :object => @processors
-=paginate @processors
+.three-quarters
+	=paginate @processors
+	=render :partial => 'searches/result', :object => @processors.results
+	=paginate @processors
+
+.third
+	.facets
+		%h3 Browse by Brand
+		%ul.facet
+			-for row in @processors.facet(:brand).rows
+				%li
+					= link_to row.value, processors_path(:brand => row.value)
+					="(#{row.count})"

@@ -3,7 +3,14 @@ class MotherboardsController < ApplicationController
   # GET /motherboards.json
   def index
     
-    @motherboards = Motherboard.asc(:name).page(params[:page])
+    @motherboards = Motherboard.search do
+      order_by :name, :asc
+      paginate :page => params[:page], :per_page => 10
+      brand_filter = with(:brand, params[:brand]) if params[:brand]
+      facet :brand, :sort => :count, :exclude => brand_filter
+    end
+    
+    #@motherboards = Motherboard.asc(:name).page(params[:page])
 
     respond_to do |format|
       format.html # index.html.erb

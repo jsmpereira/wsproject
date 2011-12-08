@@ -1,5 +1,20 @@
-%h1 Listing memories
+%h1
+	Listing
+	-if params[:brand]
+		%span.brand=params[:brand]
+	memories
+	="(#{@memories.total})"
 
-=paginate @memories
-=render :partial => 'searches/result', :object => @memories
-=paginate @memories
+.three-quarters
+	=paginate @memories
+	=render :partial => 'searches/result', :object => @memories.results
+	=paginate @memories
+
+.third
+	.facets
+		%h3 Browse by Brand
+		%ul.facet
+			-for row in @memories.facet(:brand).rows
+				%li
+					= link_to row.value, memories_path(:brand => row.value)
+					="(#{row.count})"

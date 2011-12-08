@@ -1,5 +1,20 @@
-%h1 Listing videocards
+%h1
+	Listing
+	-if params[:brand]
+		%span.brand=params[:brand]
+	videocards
+	="(#{@videocards.total})"
+	
+.three-quarters
+	=paginate @videocards
+	=render :partial => 'searches/result', :object => @videocards.results
+	=paginate @videocards
 
-=paginate @videocards
-=render :partial => 'searches/result', :object => @videocards
-=paginate @videocards
+.third
+	.facets
+		%h3 Browse by Brand
+		%ul.facet
+			-for row in @videocards.facet(:brand).rows
+				%li
+					= link_to row.value, videocards_path(:brand => row.value)
+					="(#{row.count})"
