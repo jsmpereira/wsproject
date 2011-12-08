@@ -1,19 +1,5 @@
--if @search_total
-	%h3
-		Found
-		=@search_total
-		results  for
-		%u=params[:q]
-
 %h1 Listing videocards
 
-=paginate @search ? @search : @videocards
-%table#listing
-	- @videocards.each do |videocard|
-		%tr
-			%td=image_tag videocard.image, :class => 'thumb'
-			%td=videocard.brand
-			%td=link_to videocard.name, videocard
-			%td=link_to videocard.item, "http://www.newegg.com/Product/Product.aspx?Item=#{videocard.item}", :target => '_blank'
-
-=paginate @search ? @search : @videocards
+=paginate @videocards
+=render :partial => 'searches/result', :object => @videocards
+=paginate @videocards

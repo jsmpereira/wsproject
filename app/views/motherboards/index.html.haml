@@ -1,19 +1,5 @@
--if @search_total
-	%h3
-		Found
-		=@search_total
-		results for
-		%u=params[:q]
-
 %h1 Listing motherboards
 
-=paginate @search ? @search : @motherboards
-%table#listing
-	- @motherboards.each do |motherboard|
-		%tr
-			%td=image_tag motherboard.image, :class => 'thumb'
-			%td=motherboard.brand
-			%td=link_to motherboard.name, motherboard
-			%td=link_to motherboard.item, "http://www.newegg.com/Product/Product.aspx?Item=#{motherboard.item}", :target => '_blank'
-
-=paginate @search ? @search : @motherboards
+=paginate @motherboards
+=render :partial => 'searches/result', :object => @motherboards
+=paginate @motherboards

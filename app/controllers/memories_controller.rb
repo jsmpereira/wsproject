@@ -2,18 +2,8 @@ class MemoriesController < ApplicationController
   # GET /memories
   # GET /memories.json
   def index
-    
-    if params[:q]
-      @search = Memory.search do
-        fulltext params[:q]
-        order_by :name, :asc
-        paginate :page => params[:page], :per_page => 10
-      end
-      @memories = @search.results
-      @search_total = @search.total
-    else
-      @memories = Memory.asc(:name).page(params[:page])
-    end
+
+    @memories = Memory.asc(:name).page(params[:page])
 
     respond_to do |format|
       format.html # index.html.erb

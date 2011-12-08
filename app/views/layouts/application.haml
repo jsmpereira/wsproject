@@ -10,13 +10,15 @@
 	%body
 		#menu
 			%ul
+				%li=link_to "Home", root_path
 				%li=link_to "Motherboards", motherboards_path, :class => check_active(motherboards_path)
 				%li=link_to "Processors", processors_path, :class => check_active(processors_path)
 				%li=link_to "Video Cards", videocards_path, :class => check_active(videocards_path)
 				%li=link_to "Memory", memories_path, :class => check_active(memories_path)
 				%li
-					=form_tag polymorphic_path(params[:controller]), :method => :get do
-						=default_text_field :q, "Search ..."
+					=form_tag searches_path, :method => :get do
+						=default_text_field :q, "Search #{(params[:controller] == 'searches' && params[:target].blank?) ? 'everything' : (params[:target] ? params[:target].pluralize : params[:controller])} ... "
+						=hidden_field_tag :target, (params[:controller] == 'searches' && params[:target].blank?) ? '' : (params[:target] ? params[:target] : params[:controller].singularize)
 					
 						=submit_tag "Submit"
 	

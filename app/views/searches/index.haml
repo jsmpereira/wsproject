@@ -1,16 +1,68 @@
-%ul#home
-	%li
-		%span.header=link_to "Find a replacement", ""
-		%p Compatible replacement parts
-	%li
-		%span.header=link_to "Get a Computer", ""
-		%p New or from parts you already have
-	%li
-		%span.header=link_to "Browse our database", ""
-		%p Find what you want
 
-#search
-	=form_tag polymorphic_path(params[:controller]), :method => :get do
-		=default_text_field :q, "I want to replace my xpto video card..."
+-if params[:q]
+
+	%h1
+		Results for
+		%u=params[:q]
+		
+	.half
 	
-		=submit_tag "Submit"
+		-unless @motherboards.nil? || @motherboards.empty? && (@target || @target != "motherboard")
+			%h2
+				Motherboards
+				="(#{@motherboards_search_total})"
+			
+			=render :partial => "result", :object => @motherboards
+			=paginate @motherboards_search, :param_name => 'motherboard_page'
+			-if @motherboards.empty?
+				No motherboards found.
+
+		-unless @processors.nil? || @processors.empty? && (@target || @target != "processor")		
+			%h2
+				Processors
+				="(#{@processors_search_total})"
+				
+			=render :partial => "result", :object => @processors
+			=paginate @processors_search, :param_name => 'processor_page'
+			-if @processors.empty?
+				No processors found.
+
+	.half
+		
+		-unless @videocards.nil? || @videocards.empty? && (@target || @target != "videocard")
+			%h2
+				Video Cards
+				="(#{@videocards_search_total})"
+				
+			=render :partial => "result", :object => @videocards
+			=paginate @videocards_search, :param_name => 'videocard_page'
+			-if @videocards.empty?
+				No videocards found.
+
+		-unless @memories.nil? || @memories.empty? && (@target || @target != "memory")
+			%h2
+				Memories
+				="(#{@memories_search_total})"
+			
+			=render :partial => "result", :object => @memories
+			=paginate @memories_search, :param_name => 'memory_page'
+			-if @memories.empty?
+				No memories found.
+	
+-else 
+	%ul#home
+		%li
+			%span.header=link_to "Find a replacement", ""
+			%p Compatible replacement parts
+		%li
+			%span.header=link_to "Get a Computer", ""
+			%p New or from parts you already have
+		%li
+			%span.header=link_to "Browse our database", ""
+			%p Find what you want
+	
+	#search
+		=form_tag polymorphic_path(params[:controller]), :method => :get do
+			=default_text_field :q, "I want to replace my xpto video card..."
+		
+			=submit_tag "Submit"

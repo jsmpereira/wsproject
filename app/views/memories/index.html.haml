@@ -1,19 +1,5 @@
--if @search_total
-	%h3
-		Found
-		=@search_total
-		results  for
-		%u=params[:q]
-
 %h1 Listing memories
 
-=paginate @search ? @search : @memories
-%table#listing
-	- @memories.each do |memory|
-		%tr
-			%td=image_tag memory.image, :class => 'thumb'
-			%td=memory.brand
-			%td=link_to memory.name, memory
-			%td=link_to memory.item, "http://www.newegg.com/Product/Product.aspx?Item=#{memory.item}", :target => '_blank'
-
-=paginate @search ? @search : @memories
+=paginate @memories
+=render :partial => 'searches/result', :object => @memories
+=paginate @memories

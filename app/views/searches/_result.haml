@@ -1,0 +1,7 @@
+%table{:class => params[:q] ? 'search' : 'listing'}
+	- result.each do |member|
+		%tr
+			%td=image_tag member.image, :class => 'thumb'
+			%td=member.brand if !params[:q]
+			%td=link_to member.name, member
+			%td=link_to member.item, "http://www.newegg.com/Product/Product.aspx?Item=#{member.item}", :target => '_blank' if !params[:q]
