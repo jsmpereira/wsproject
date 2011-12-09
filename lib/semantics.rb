@@ -21,37 +21,37 @@ module Semantics
       Motherboard.all.each do |m|
         
         mr = MotherboardRdf.for(m.item)
-        mr.update(:modelName => m.name,
-                  :brand => m.details['Brand'],
-                  :cpuSocket => m.details['CPU Socket Type'],
-                  :graphSlot => m.details['PCI Express x8'] || m.details['PCI Express 3_0 x16'],
-                  :memoryType => m.details['Memory Standard'])
+        mr.update(:hasModelName => m.name,
+                  :hasBrand => m.brand,
+                  :hasCpuSocket => m.cpu_socket,
+                  :hasGraphSlot => m.graph_slot,
+                  :hasMemoryType => m.memory_type)
         mr.save!
       end
       
       Processor.all.each do |p|
         pr = ProcessorRdf.for(p.item)
-        pr.update(:modelName => p.name,
-                  :brand => p.details['Brand'],
-                  :cpuSocket => p.details['CPU Socket Type'])
+        pr.update(:hasModelName => p.name,
+                  :hasBrand => p.brand,
+                  :hasCpuSocket => p.cpu_socket)
         pr.save!
       end
       
       Videocard.all.each do |v|
         vr = VideocardRdf.for(v.item)
-        vr.update(:modelName => v.name,
-                  :brand => v.details['Brand'],
-                  :graphSlot => v.details['Interface'])
+        vr.update(:hasModelName => v.name,
+                  :hasBrand => v.brand,
+                  :hasGraphSlot => v.graph_slot)
         vr.save!
       end
       
       Memory.all.each do |m|
         mr = MemoryRdf.for(m.item)
-        mr.update(:modelName => m.name,
-                  :brand => m.details['Brand'],
-                  :capacity => m.details['Capacity'],
-                  :memoryType => m.details['Type'],
-                  :speed => m.details['Speed'])
+        mr.update(:hasModelName => m.name,
+                  :hasBrand => m.brand,
+                  :hasCapacity => m.capacity,
+                  :hasMemoryType => m.memory_type,
+                  :hasSpeed => m.speed)
         mr.save!
       end
     end
