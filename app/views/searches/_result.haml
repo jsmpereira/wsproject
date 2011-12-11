@@ -1,5 +1,7 @@
 %table.search
 	- result.each do |member|
 		%tr
+			-if params[:action] == 'browse'
+				%td=member.class.name
 			%td=image_tag member.image, :class => 'thumb'
 			%td=link_to member.name, member

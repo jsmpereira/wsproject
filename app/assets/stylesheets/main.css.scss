@@ -18,6 +18,7 @@ a {
 .none {display: none;}
 
 .left {float: left;}
+.right {float: right;}
 
 .half, .third, .three-quarters { float: left; margin-right: 1em; padding: 1em; }
 
@@ -105,6 +106,7 @@ table.search {
 	border: 1px solid #999;
 	width: 65%;
 	float: left;
+	text-align: center;
 	td {border-bottom: 1px solid #999}
 }
 

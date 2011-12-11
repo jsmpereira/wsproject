@@ -14,6 +14,24 @@ class SearchesController < ApplicationController
     end
   end
   
+  
+  def browse
+    
+    browse = Sunspot.search Motherboard, Processor, Videocard, Memory do
+      order_by :name, :asc
+      paginate :page => params[:page], :per_page => 15
+      brand_filter = with(:brand, params[:brand]) if params[:brand]
+      facet :brand, :sort => :count, :exclude => brand_filter
+    end
+    
+    @results = browse.results
+    @browse_search = browse
+    
+    respond_to do |format|
+      format.html {  }
+    end
+  end
+  
   def sparql
     
     if params[:query]
@@ -32,7 +50,7 @@ class SearchesController < ApplicationController
     
     if @target.blank? || @target.include?(content)
       search = content.capitalize.constantize.search do
-        fulltext params[:q]
+        fulltext (params[:q] == "Search everything ..." ? "" : params[:q])
         order_by :name, :asc
         paginate :page => params[content+"_page".to_s], :per_page => 10
         brand_filter = with(:brand, params[:brand]) if params[:brand]

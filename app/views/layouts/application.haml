@@ -17,7 +17,7 @@
 				%li=link_to "Memory", memories_path, :class => check_active(memories_path)
 				%li
 					=form_tag searches_path, :method => :get do
-						=default_text_field :q, "Search #{(params[:controller] == 'searches' && params[:target].blank?) ? 'everything' : (params[:target] ? params[:target].pluralize : params[:controller])} ... "
+						=default_text_field :q, "Search #{(params[:controller] == 'searches' && params[:target].blank?) ? 'everything' : (params[:target] ? params[:target].pluralize : params[:controller])} ..."
 						=hidden_field_tag :target, (params[:controller] == 'searches' && params[:target].blank?) ? '' : (params[:target] ? params[:target] : params[:controller].singularize)
 					
 						=submit_tag "Submit"

@@ -10,6 +10,7 @@ Wsproject::Application.routes.draw do
   resources :motherboards
 
   match 'sparql' => 'searches#sparql'
+  match 'browse' => 'searches#browse'
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
