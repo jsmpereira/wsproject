@@ -9,12 +9,15 @@ body {
 
 a {
 	color: #000;
-	&:visited {
-		color: #666; }
 	&:hover {
 		color: #fff;
 		background-color: #000;}
 }
+
+.clear {clear: both;}
+.none {display: none;}
+
+.left {float: left;}
 
 .half, .third, .three-quarters { float: left; margin-right: 1em; padding: 1em; }
 
@@ -78,7 +81,7 @@ ul.details {
 	li, li p {font-size: 10px}
 }
 
-.statements {
+#statements_tab {
 	float: none;
 	border: 1px solid;
 	padding: 0.5em;
@@ -86,20 +89,27 @@ ul.details {
 	p {font-size: 10px}
 }
 
-.none {
-	display: none;
-}
-
-.listing {
+table.listing {
+	border-collapse: collapse;
 	width: 100%;
 	text-align: center;
+	thead {font-weight: bold}
 	td {
 		border: 1px solid #999;
-		padding: 1em;
+		font-size: 10px;
 	}
 }
 
+table.search {
+	border-collapse: collapse;
+	border: 1px solid #999;
+	width: 65%;
+	float: left;
+	td {border-bottom: 1px solid #999}
+}
+
 #details {
+	td.label {font-weight: bold}
 	td, p {font-size: 10px}
 	td {
 		border: 1px solid #999;
@@ -129,7 +139,63 @@ ul#home {
 
 #recommendations {margin: 1em; overflow: hidden; float: right}
 
-.facets {float:right;}
+.facets {
+	margin-top: 1em;
+	-moz-border-radius: .3em;
+	-webkit-border-radius: .3em;
+	border-radius: .3em;
+	float:left;
+	padding: 0.5em;
+	border: 1px solid #999;
+	ul {list-style: none; padding: 0;}
+	h3 {margin-top: 0em}
+}
 
 span.brand {text-decoration: underline; font-style: italic; color: purple}
 span.query a {font-style: italic; color: #F1651A}
+
+#tabs {
+	li {
+		display: inline;
+	}
+}
+
+.pagination {
+	margin: 1em;
+	span {
+		border: 1px solid #999;
+		display: inline-block;
+		color: #333;
+		&:hover {
+			a {
+				display: inline-block;
+				background: #333;
+				color: #fff;
+				padding: 0.3em;
+			}
+		}
+	}
+	a {
+		display: inline-block;
+		text-decoration: none;
+		padding: 0.3em;
+		&:hover {background: inherit}
+	}
+	.current {
+		background: #333;
+		color: #fff;
+		padding: 0.3em;
+	}
+	.page, .next, .prev, .last, .first {
+		-moz-border-radius: .2em;
+		-webkit-border-radius: .2em;
+		border-radius: .2em;
+		&:hover {
+			background: #333;
+		}
+	}
+	.page.gap {
+		border: none;
+		&:hover {background: none;}
+	}
+}

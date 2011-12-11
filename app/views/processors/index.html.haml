@@ -6,7 +6,19 @@
 
 .three-quarters
 	=paginate @processors
-	=render :partial => 'searches/result', :object => @processors.results
+	%table.listing
+		%thead
+			%tr
+				%td
+				%td Brand
+				%td Model
+				%td CPU Socket
+		- @processors.results.each do |member|
+			%tr
+				%td=image_tag member.image, :class => 'thumb'
+				%td=member.brand
+				%td=link_to member.name, member
+				%td=member.cpu_socket
 	=paginate @processors
 
 .third

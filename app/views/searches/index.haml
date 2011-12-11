@@ -17,6 +17,8 @@
 				Motherboards
 				="(#{@motherboards_search_total})"
 				
+			=render :partial => "result", :object => @motherboards
+			
 			.facets
 				%h3 Browse by Brand
 				%ul.facet
@@ -24,17 +26,22 @@
 						%li
 							= link_to row.value, searches_path(:q => params[:q], :brand => row.value, :target => 'motherboard')
 							= row.count
-
-			=render :partial => "result", :object => @motherboards
-			=paginate @motherboards_search, :param_name => 'motherboard_page'
+			
+			%br.clear
+			.left
+				=paginate @motherboards_search, :param_name => 'motherboard_page'
+			
 		-if @motherboards && @motherboards.empty?
 			No motherboards found.
 
+		%br.clear
 		-unless @processors.nil? || @processors.empty? && (@target || @target != "processor")		
 			%h2
 				Processors
 				="(#{@processors_search_total})"
 				
+			=render :partial => "result", :object => @processors
+			
 			.facets
 				%h3 Browse by Brand
 				%ul.facet
@@ -42,9 +49,11 @@
 						%li
 							= link_to row.value, searches_path(:q => params[:q], :brand => row.value, :target => 'processor')
 							= row.count
-				
-			=render :partial => "result", :object => @processors
-			=paginate @processors_search, :param_name => 'processor_page'
+
+			%br.clear
+			.left
+				=paginate @processors_search, :param_name => 'processor_page'
+			
 		-if @processors && @processors.empty?
 			No processors found.
 
@@ -55,6 +64,8 @@
 				Video Cards
 				="(#{@videocards_search_total})"
 				
+			=render :partial => "result", :object => @videocards
+			
 			.facets
 				%h3 Browse by Brand
 				%ul.facet
@@ -62,16 +73,21 @@
 						%li
 							= link_to row.value, searches_path(:q => params[:q], :brand => row.value, :target => 'videocard')
 							= row.count
-				
-			=render :partial => "result", :object => @videocards
-			=paginate @videocards_search, :param_name => 'videocard_page'
+			
+			%br.clear
+			.left
+				=paginate @videocards_search, :param_name => 'videocard_page'
+
 		-if @videocards && @videocards.empty?
 			No videocards found.
-
+		
+		%br.clear
 		-unless @memories.nil? || @memories.empty? && (@target || @target != "memory")
 			%h2
 				Memories
 				="(#{@memories_search_total})"
+
+			=render :partial => "result", :object => @memories
 			
 			.facets
 				%h3 Browse by Brand
@@ -80,9 +96,11 @@
 						%li
 							= link_to row.value, searches_path(:q => params[:q], :brand => row.value, :target => 'memory')
 							= row.count
-			
-			=render :partial => "result", :object => @memories
-			=paginate @memories_search, :param_name => 'memory_page'
+
+			%br.clear
+			.left
+				=paginate @memories_search, :param_name => 'memory_page'
+
 		-if @memories && @memories.empty?
 			No memories found.
 	

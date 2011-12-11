@@ -7,7 +7,23 @@
 
 .three-quarters
 	=paginate @memories
-	=render :partial => 'searches/result', :object => @memories.results
+	%table.listing
+		%thead
+			%tr
+				%td
+				%td Brand
+				%td Model
+				%td Speed
+				%td Type
+				%td Capacity
+		- @memories.results.each do |member|
+			%tr
+				%td=image_tag member.image, :class => 'thumb'
+				%td=member.brand
+				%td=link_to member.name, member
+				%td=member.speed
+				%td=member.memory_type
+				%td=member.capacity
 	=paginate @memories
 
 .third

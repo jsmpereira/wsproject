@@ -1,12 +1,33 @@
-.half
+.three-quarters
 	%p#notice= notice
 	
 	%h1=@memory.name
-	%h3=@memory.item
+	%h3=link_to @memory.item, "http://www.newegg.com/Product/Product.aspx?Item=#{@memory.item}", :target => '_blank'
 	
-	=link_to 'statements', "", :class => 'toggle'
+	%ul#tabs
+		%li=link_to 'Attributes', '', :class => 'toggle'
+		%li=link_to 'Statements', "", :class => 'toggle'
+		%li=link_to 'Details', "", :class => 'toggle'
+
+	%div#attributes_tab
+		%table#details
+			%tr
+				%td.label Brand
+				%td=@memory.brand
+				%tr
+				%td.label Model
+				%td=@memory.name
+				%tr
+				%td.label Speed
+				%td=@memory.speed
+				%tr
+				%td.label Memory Type
+				%td=@memory.memory_type
+				%tr
+				%td.label Capacity
+				%td=@memory.capacity
 	
-	%div.statements.none
+	%div#statements_tab.none
 		%h3 Statements
 		
 		%p
@@ -15,15 +36,14 @@
 		-@memory_rdf.each do |solution|
 			%p=solution.inspect
 	
-	-if @memory.details
-		%div
-			%table#details
-				-@memory.details.each_pair do |key, value|
-					%tr
-						%td=key
-						%td=simple_format(value)
+	%div#details_tab.none
+		%table#details
+			-@memory.details.each_pair do |key, value|
+				%tr
+					%td=key
+					%td=simple_format(value)
 					
-.half 
+.third
 	=image_tag @memory.image, :class => 'pic'
 
 	#recommendations

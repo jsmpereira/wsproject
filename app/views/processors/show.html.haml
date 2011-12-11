@@ -1,12 +1,27 @@
-.half
+.three-quarters
 	%p#notice= notice
 	
 	%h1=@processor.name
-	%h3=@processor.item
+	%h3=link_to @processor.item, "http://www.newegg.com/Product/Product.aspx?Item=#{@processor.item}", :target => '_blank'
 	
-	=link_to 'statements', "", :class => 'toggle'
+	%ul#tabs
+		%li=link_to 'Attributes', '', :class => 'toggle'
+		%li=link_to 'Statements', "", :class => 'toggle'
+		%li=link_to 'Details', "", :class => 'toggle'
+		
+	%div#attributes_tab
+		%table#details
+			%tr
+				%td.label Brand
+				%td=@processor.brand
+				%tr
+				%td.label Model
+				%td=@processor.name
+				%tr
+				%td.label CPU Socket
+				%td=@processor.cpu_socket
 	
-	%div.statements.none
+	%div#statements_tab.none
 		%h3 Statements
 		
 		%p
@@ -14,16 +29,15 @@
 	
 		-@processor_rdf.each do |solution|
 			%p=solution.inspect
-	
-	-if @processor.details
-		%div
-			%table#details
-				-@processor.details.each_pair do |key, value|
-					%tr
-						%td=key
-						%td=simple_format(value)
 
-.half 
+	%div#details_tab.none
+		%table#details
+			-@processor.details.each_pair do |key, value|
+				%tr
+					%td=key
+					%td=simple_format(value)
+
+.third
 	=image_tag @processor.image, :class => 'pic'
 
 	#recommendations

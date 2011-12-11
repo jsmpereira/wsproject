@@ -1,29 +1,49 @@
-.half
+.three-quarters
 	%p#notice= notice
 	
 	%h1=@motherboard.name
-	%h3=@motherboard.item
+	%h3=link_to @motherboard.item, "http://www.newegg.com/Product/Product.aspx?Item=#{@motherboard.item}", :target => '_blank'
 	
-	=link_to 'statements', "", :class => 'toggle'
+	%ul#tabs
+		%li=link_to 'Attributes', '', :class => 'toggle'
+		%li=link_to 'Statements', "", :class => 'toggle'
+		%li=link_to 'Details', "", :class => 'toggle'
+
+	%div#attributes_tab
+		%table#details
+			%tr
+				%td.label Brand
+				%td=@motherboard.brand
+				%tr
+				%td.label Model
+				%td=@motherboard.name
+				%tr
+				%td.label CPU Socket
+				%td=@motherboard.cpu_socket
+				%tr
+				%td.label Memory Type
+				%td=@motherboard.memory_type
+				%tr
+				%td.label Graph Slot
+				%td=@motherboard.graph_slot
 	
-	%div.statements.none
+	%div#statements_tab.none
 		%h3 Statements
-		
+	
 		%p
 			%strong="SELECT * WHERE { <#{MotherboardRdf.for(@motherboard.item).subject.to_s}> ?p ?o }"
-		
+	
 		-@motherboard_rdf.each do |solution|
 			%p=solution.inspect
-	
-	-if @motherboard.details
-		%div
-			%table#details
-				-@motherboard.details.each_pair do |key, value|
-					%tr
-						%td=key
-						%td=simple_format(value)
-						
-.half 
+
+	%div#details_tab.none
+		%table#details
+			-@motherboard.details.each_pair do |key, value|
+				%tr
+					%td.label=key
+					%td=simple_format(value)
+					
+.third
 	=image_tag @motherboard.image, :class => 'pic'
 	
 	#recommendations

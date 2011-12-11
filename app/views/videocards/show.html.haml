@@ -1,12 +1,27 @@
-.half
+.three-quarters
 	%p#notice= notice
 	
 	%h1=@videocard.name
-	%h3=@videocard.item
+	%h3=link_to @videocard.item, "http://www.newegg.com/Product/Product.aspx?Item=#{@videocard.item}", :target => '_blank'
 	
-	=link_to 'statements', "", :class => 'toggle'
+	%ul#tabs
+		%li=link_to 'Attributes', '', :class => 'toggle'
+		%li=link_to 'Statements', "", :class => 'toggle'
+		%li=link_to 'Details', "", :class => 'toggle'
+		
+	%div#attributes_tab
+		%table#details
+			%tr
+				%td.label Brand
+				%td=@videocard.brand
+				%tr
+				%td.label Model
+				%td=@videocard.name
+				%tr
+				%td.label Graph Slot
+				%td=@videocard.graph_slot
 	
-	%div.statements.none
+	%div#statements_tab.none
 		%h3 Statements
 	
 		%p
@@ -14,16 +29,15 @@
 		
 		-@videocard_rdf.each do |solution|
 			%p=solution.inspect
-	
-	-if @videocard.details
-		%div
+
+	%div#details_tab.none
 		%table#details
 			-@videocard.details.each_pair do |key, value|
 				%tr
 					%td=key
 					%td=simple_format(value)
 				
-.half 
+.third
 	=image_tag @videocard.image, :class => 'pic'
 
 	#recommendations
