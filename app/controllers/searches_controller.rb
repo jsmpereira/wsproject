@@ -14,7 +14,6 @@ class SearchesController < ApplicationController
     end
   end
   
-  
   def browse
     
     browse = Sunspot.search Motherboard, Processor, Videocard, Memory do
@@ -26,6 +25,29 @@ class SearchesController < ApplicationController
     
     @results = browse.results
     @browse_search = browse
+    
+    respond_to do |format|
+      format.html {  }
+    end
+  end
+  
+  def rdf
+
+    repo = RDF::Repository.new << RDF::Mongo::Repository.new
+
+    if params[:member] && params[:class]
+      @member_query = "select ?s ?p ?o where {<http://www.semanticweb.org/ontologies/2011/10/Ontology1321532209875.owl##{params[:class]}/#{params[:member]}> ?p ?o}"
+      @member = SPARQL.execute(@member_query, repo)
+    elsif params[:class]
+      @members_query = "select * where {?type a <#{params[:class]}>}"
+      @members = SPARQL.execute(@members_query, repo)
+    else
+      @classes_query = "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      SELECT ?subClass WHERE {
+       ?subClass rdfs:subClassOf <http://www.semanticweb.org/ontologies/2011/10/Ontology1321532209875.owl#Hardware> . 
+      }"
+      @classes = SPARQL.execute(@classes_query, repo)
+    end
     
     respond_to do |format|
       format.html {  }

@@ -14,6 +14,8 @@ a {
 		background-color: #000;}
 }
 
+blockquote {font-style: italic}
+
 .clear {clear: both;}
 .none {display: none;}
 
@@ -87,7 +89,8 @@ ul.details {
 	border: 1px solid;
 	padding: 0.5em;
 	margin: 1em;
-	p {font-size: 10px}
+	p, li {font-size: 10px}
+	li {margin-left: 1em}
 }
 
 table.listing {
@@ -103,10 +106,10 @@ table.listing {
 
 table.search {
 	border-collapse: collapse;
-	border: 1px solid #999;
 	width: 65%;
 	float: left;
 	text-align: center;
+	tr:hover {background: #eee}
 	td {border-bottom: 1px solid #999}
 }
 
@@ -119,8 +122,9 @@ table.search {
 	}
 }
 
-img.thumb {
-	width: 5em
+a.thumb {
+	&:hover {background: inherit}
+	img {width: 5em}
 }
 
 img.pic {
@@ -200,4 +204,8 @@ span.query a {font-style: italic; color: #F1651A}
 		border: none;
 		&:hover {background: none;}
 	}
+}
+
+.rdf {
+	li {font-size: 10px}
 }

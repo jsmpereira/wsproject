@@ -27,8 +27,11 @@
 		%p
 			%strong="SELECT * WHERE { <#{VideocardRdf.for(@videocard.item).subject.to_s}> ?p ?o }"
 		
+		%ul
 		-@videocard_rdf.each do |solution|
-			%p=solution.inspect
+			%li
+				=solution.p
+				%strong=solution.o
 
 	%div#details_tab.none
 		%table#details

@@ -27,8 +27,11 @@
 		%p
 			%strong="SELECT * WHERE { <#{ProcessorRdf.for(@processor.item).subject.to_s}> ?p ?o }"
 	
+		%ul
 		-@processor_rdf.each do |solution|
-			%p=solution.inspect
+			%li
+				=solution.p
+				%strong=solution.o
 
 	%div#details_tab.none
 		%table#details

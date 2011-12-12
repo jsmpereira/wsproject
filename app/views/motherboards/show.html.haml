@@ -33,8 +33,11 @@
 		%p
 			%strong="SELECT * WHERE { <#{MotherboardRdf.for(@motherboard.item).subject.to_s}> ?p ?o }"
 	
+		%ul
 		-@motherboard_rdf.each do |solution|
-			%p=solution.inspect
+			%li
+				=solution.p
+				%strong=solution.o
 
 	%div#details_tab.none
 		%table#details

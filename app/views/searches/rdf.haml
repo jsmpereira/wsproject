@@ -1,0 +1,20 @@
+%h1=link_to "RDF", rdf_path
+
+-if params[:member]
+
+	%blockquote=@member_query
+	%ul.rdf
+		-@member.each do |m|
+			%li
+				=m.p
+				%strong=m.o
+-elsif params[:class]
+	%blockquote=@members_query
+	%ul
+		-@members.each do |m|
+			%li=link_to m.type, rdf_path(:class => params[:class], :member => m.type.to_s.split("#")[1].split("/")[1])
+-else
+	%blockquote=simple_format(h(@classes_query))
+	%ul
+		-@classes.each do |klass|
+			%li=link_to klass.subClass, rdf_path(:class => klass.subClass.to_s.split("#")[1])
