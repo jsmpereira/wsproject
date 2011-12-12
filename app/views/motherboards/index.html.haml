@@ -18,7 +18,7 @@
 				%td Graph Slot
 		- @motherboards.results.each do |member|
 			%tr
-				%td=image_tag member.image, :class => 'thumb'
+				%td=link_to image_tag(member.image), member, :class => 'thumb'
 				%td=member.brand
 				%td=link_to member.name, member
 				%td=member.cpu_socket
