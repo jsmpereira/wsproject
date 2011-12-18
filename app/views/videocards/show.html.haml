@@ -43,11 +43,4 @@
 .third
 	=image_tag @videocard.image, :class => 'pic'
 
-	#recommendations
-		%h2 Recommendations
-
-		%table
-			-Videocard.limit(3).each do |v|
-				%tr
-					%td=image_tag v.image, :class => 'thumb'
-					%td=link_to v.name, v
+	=render :partial => 'searches/recommendations', :object => @recommendations

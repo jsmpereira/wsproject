@@ -12,6 +12,7 @@ Wsproject::Application.routes.draw do
   match 'sparql' => 'searches#sparql'
   match 'browse' => 'searches#browse'
   match 'rdf' => 'searches#rdf'
+  match 'semantic' => 'searches#semantic'
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

@@ -1,0 +1,17 @@
+#recommendations
+	%h2 Recommendations
+
+	%table
+		-@recommendations.each do |m|
+			%tr
+				%td=link_to image_tag(m.image), m, :class => 'thumb'
+				%td=link_to m.name, m
+	
+	-#if params[:action] == 'show'
+	-# %h2 You might like
+
+		-#%table
+		-#	-@might_like.each do |l|
+		-#		%tr
+		-#			%td=link_to image_tag(l.image), l, :class => 'thumb'
+		-#			%td=link_to l.name, l

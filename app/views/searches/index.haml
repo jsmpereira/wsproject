@@ -11,7 +11,7 @@
 			=params[:target].pluralize
 		
 	.half
-	
+
 		-unless @motherboards.nil? || @motherboards.empty? && (@target || @target != "motherboard")
 			%h2
 				Motherboards
@@ -117,7 +117,7 @@
 			%p Find what you want
 	
 	#search
-		=form_tag polymorphic_path(params[:controller]), :method => :get do
-			=default_text_field :q, "I want to replace my xpto video card..."
+		=form_tag semantic_path, :method => :get do
+			=default_text_field :sq, "I want to replace my xpto video card..."
 		
 			=submit_tag "Submit"

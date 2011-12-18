@@ -54,6 +54,35 @@ class SearchesController < ApplicationController
     end
   end
   
+  def semantic
+
+    tokens = params[:sq].split(" ")
+    
+    klass = tokens.select{|t| ["motherboard", "processor", "videocard", "memory"].include?(t)}.uniq
+    the_klass = "select * where {?type a <#{klass.first.capitalize}>"
+    
+    if tokens.include?("from")
+      property = params[:sq].split("from")[1].split(" ")[0]
+      q = " ; <http://www.semanticweb.org/ontologies/2011/10/Ontology1321532209875.owl#hasBrand> \"#{property}\"}"
+    else
+      q = "}"
+    end
+    
+    repo = RDF::Repository.new << RDF::Mongo::Repository.new
+     
+    @semantic_query = the_klass + q
+    
+    logger.debug @semantic_query.inspect
+    @semantic_result = SPARQL.execute(@semantic_query, repo)
+    
+    @results = @semantic_result.collect {|r| r.type.to_s.split("#")[1].split("/")[0].capitalize.constantize.where(:item => r.type.to_s.split("#")[1].split("/")[1]).first}
+    
+    respond_to do |format|
+      format.html {  }
+    end
+    
+  end
+  
   def sparql
     
     if params[:query]

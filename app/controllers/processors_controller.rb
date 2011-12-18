@@ -23,6 +23,10 @@ class ProcessorsController < ApplicationController
 
     Spira.add_repository! :hardware, RDF::Repository.new << RDF::Mongo::Repository.new
     @processor_rdf = SPARQL.execute("SELECT * WHERE { <#{ProcessorRdf.for(@processor.item).subject.to_s}> ?p ?o }", ProcessorRdf.repository)
+    
+    @recommendations_sparql = SPARQL.execute("SELECT * WHERE { ?s <http://www.semanticweb.org/ontologies/2011/10/Ontology1321532209875.owl#hasCpuSocket> \"#{@processor.cpu_socket}\" FILTER (?s != <http://www.semanticweb.org/ontologies/2011/10/Ontology1321532209875.owl#Processor/#{@processor.item.to_s}>) } LIMIT 5", ProcessorRdf.repository)
+    
+    @recommendations = @recommendations_sparql.collect {|r| r.s.to_s.split("#")[1].split("/")[0].capitalize.constantize.where(:item => r.s.to_s.split("#")[1].split("/")[1]).first}
 
     respond_to do |format|
       format.html # show.html.erb

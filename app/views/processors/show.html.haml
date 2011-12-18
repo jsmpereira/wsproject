@@ -45,10 +45,5 @@
 
 	#recommendations
 		%h2 Recommendations
-
-		%table
-			-Processor.limit(3).each do |p|
-				%tr
-					%td=image_tag p.image, :class => 'thumb'
-					%td=link_to p.name, p
-					%td=p.brand
+		
+		=render :partial => 'searches/recommendations', :object => @recommendations

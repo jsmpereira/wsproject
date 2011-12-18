@@ -49,11 +49,4 @@
 .third
 	=image_tag @memory.image, :class => 'pic'
 
-	#recommendations
-		%h2 Recommendations
-
-		%table
-			-Memory.limit(3).each do |m|
-				%tr
-					%td=image_tag m.image, :class => 'thumb'
-					%td=link_to m.name, m
+	=render :partial => 'searches/recommendations', :object => @recommendations
