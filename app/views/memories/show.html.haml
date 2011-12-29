@@ -13,7 +13,7 @@
 		%table#details
 			%tr
 				%td.label Brand
-				%td=@memory.brand
+				%td=link_to @memory.brand, browse_path(:target => @memory.class, :brand => @memory.brand)
 				%tr
 				%td.label Model
 				%td=@memory.name

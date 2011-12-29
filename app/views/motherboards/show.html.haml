@@ -13,7 +13,7 @@
 		%table#details
 			%tr
 				%td.label Brand
-				%td=@motherboard.brand
+				%td=link_to @motherboard.brand, browse_path(:target => @motherboard.class, :brand => @motherboard.brand)
 				%tr
 				%td.label Model
 				%td=@motherboard.name

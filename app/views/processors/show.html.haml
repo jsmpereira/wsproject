@@ -13,7 +13,7 @@
 		%table#details
 			%tr
 				%td.label Brand
-				%td=@processor.brand
+				%td=link_to @processor.brand, browse_path(:target => @processor.class, :brand => @processor.brand)
 				%tr
 				%td.label Model
 				%td=@processor.name

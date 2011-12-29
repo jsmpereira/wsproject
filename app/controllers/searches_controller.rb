@@ -16,7 +16,13 @@ class SearchesController < ApplicationController
   
   def browse
     
-    browse = Sunspot.search Motherboard, Processor, Videocard, Memory do
+    if params[:target]
+      target = params[:target].constantize
+    else
+      target = [Motherboard, Processor, Videocard, Memory]
+    end
+    
+    browse = Sunspot.search target do
       order_by :name, :asc
       paginate :page => params[:page], :per_page => 15
       brand_filter = with(:brand, params[:brand]) if params[:brand]
