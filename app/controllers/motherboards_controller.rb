@@ -29,6 +29,8 @@ class MotherboardsController < ApplicationController
     
     @recommendations = Semantics::Recommendations.new.for_motherboard(@motherboard)
     
+    @computer = Semantics::Recommendations.new.build_computer(@motherboard)
+    
     respond_to do |format|
       format.html # show.html.erb
       format.json { render :json => @motherboard }

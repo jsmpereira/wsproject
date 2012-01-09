@@ -29,6 +29,8 @@ class VideocardsController < ApplicationController
 
     @recommendations = Semantics::Recommendations.new.for_videocard(@videocard)
     
+    @computer = Semantics::Recommendations.new.build_computer(@videocard)
+    
     respond_to do |format|
       format.html # show.html.erb
       format.json { render :json => @videocard }

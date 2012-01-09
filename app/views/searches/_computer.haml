@@ -1,8 +1,8 @@
 #recommendations
-	%h2 Recommendations
+	%h2 Build a Computer with
 
 	%table
-		-@recommendations.each do |m|
+		-@computer.each do |m|
 			%tr
 				%td=link_to image_tag(m.image), m, :class => 'thumb'
 				%td=link_to m.name, m

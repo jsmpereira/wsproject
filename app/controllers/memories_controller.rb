@@ -24,10 +24,12 @@ class MemoriesController < ApplicationController
   def show
     @memory = Memory.find(params[:id])
     
-    Spira.add_repository! :hardware, RDF::Repository.new << RDF::Mongo::Repository.new
+    Spira.add_repository! :hardware, RDF::Mongo::Repository.new
     @memory_rdf = SPARQL.execute("SELECT * WHERE { <#{MemoryRdf.for(@memory.item).subject.to_s}> ?p ?o }", MemoryRdf.repository)
     
     @recommendations = Semantics::Recommendations.new.for_memory(@memory)
+
+    @computer = Semantics::Recommendations.new.build_computer(@memory)
 
     respond_to do |format|
       format.html # show.html.erb

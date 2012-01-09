@@ -50,3 +50,5 @@
 	=image_tag @memory.image, :class => 'pic'
 
 	=render :partial => 'searches/recommendations', :object => @recommendations
+	
+	=render :partial => 'searches/computer', :object => @computer if @computer

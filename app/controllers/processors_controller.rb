@@ -28,6 +28,8 @@ class ProcessorsController < ApplicationController
     @processor_rdf = SPARQL.execute("SELECT * WHERE { <#{ProcessorRdf.for(@processor.item).subject.to_s}> ?p ?o }", ProcessorRdf.repository)
     
     @recommendations = Semantics::Recommendations.new.for_processor(@processor)
+    
+    @computer = Semantics::Recommendations.new.build_computer(@processor)
 
     respond_to do |format|
       format.html # show.html.erb
