@@ -16,6 +16,8 @@
 				%li=link_to "Video Cards", videocards_path, :class => check_active(videocards_path)
 				%li=link_to "Memory", memories_path, :class => check_active(memories_path)
 				%li
+					%strong=link_to "Browse", browse_path
+				%li
 					=form_tag searches_path, :method => :get do
 						=default_text_field :q, "Search #{(params[:controller] == 'searches' && params[:target].blank?) ? 'everything' : (params[:target] ? params[:target].pluralize : params[:controller])} ..."
 						=hidden_field_tag :target, (params[:controller] == 'searches' && params[:target].blank?) ? '' : (params[:target] ? params[:target] : params[:controller].singularize)
@@ -26,5 +28,8 @@
 		
 		#footer
 			%ul
-				%li=link_to "RDF", rdf_path
-				%li=link_to "Sparql", sparql_path
+				%li
+					&copy
+					{jdpneto, jsmp}@student.dei.uc.pt
+				-#%li=link_to "RDF", rdf_path
+				-#%li=link_to "Sparql", sparql_path

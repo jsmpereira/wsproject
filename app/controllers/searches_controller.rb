@@ -50,7 +50,7 @@ class SearchesController < ApplicationController
       @member_query = "select ?s ?p ?o where {<http://www.semanticweb.org/ontologies/2011/10/Ontology1321532209875.owl##{params[:class]}/#{params[:member]}> ?p ?o}"
       @member = SPARQL.execute(@member_query, repo)
     elsif params[:class]
-      @members_query = "select * where {?type a <#{params[:class]}>}"
+      @members_query = "select * where {?type a <#{mongo_model_to_spira_model(params[:class])}>}"
       @members = SPARQL.execute(@members_query, repo)
     else
       @classes_query = "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -69,24 +69,23 @@ class SearchesController < ApplicationController
 
     query = params[:sq]
 
-    tokens = query.split(" ").map(&:singularize).map(&:downcase)
+    tokens = query.split(" ").map(&:singularize)
     
     klass = tokens.select{|t| ["motherboard", "processor", "videocard", "memory"].include?(t)}.uniq
     the_klass = "select * where {?type a <#{mongo_model_to_spira_model(klass.first)}>"
     
     if tokens.include?("from")
-      property = query.split("from")[1].split(" ")[0].capitalize
-      q = "; <http://www.semanticweb.org/ontologies/2011/10/Ontology1321532209875.owl#hasBrand> \"#{property}\"}"
+      property = query.split("from")[1].split(" ")[0]
+      q = "; <http://www.semanticweb.org/ontologies/2011/10/Ontology1321532209875.owl#hasBrand> ?o . FILTER REGEX(STR(?o),'#{property}', 'i') . }"
     elsif tokens.include?("for")
       property = query.split("for")[1].split(" ")[0]
-      q = "; <http://www.semanticweb.org/ontologies/2011/10/Ontology1321532209875.owl#hasMemoryType> \"#{property}\"}"
+      q = "; <http://www.semanticweb.org/ontologies/2011/10/Ontology1321532209875.owl#hasMemoryType> ?o . FILTER REGEX(STR(?o),'#{property}', 'i') . }"
     elsif tokens.include?("socket")
       property = query.split("socket")[1].split(" ")[0]
-      q = "; <http://www.semanticweb.org/ontologies/2011/10/Ontology1321532209875.owl#hasCpuSocket> \"#{property}\"}"
-    elsif tokens.include?("pci")
-      logger.debug "COISO #{query.inspect}"
-      property = query.split("PCI")[1].strip.map(&:capitalize)
-      q = "; <http://www.semanticweb.org/ontologies/2011/10/Ontology1321532209875.owl#hasGraphSlot> \"PCI #{property}\"}"
+      q = "; <http://www.semanticweb.org/ontologies/2011/10/Ontology1321532209875.owl#hasCpuSocket> ?o . FILTER REGEX(STR(?o),'#{property}', 'i') . }"
+    elsif tokens.include?("pci") || tokens.include?("PCI")
+      property = query.split("PCI")[1]
+      q = "; <http://www.semanticweb.org/ontologies/2011/10/Ontology1321532209875.owl#hasGraphSlot> ?o . FILTER REGEX(STR(?o),'#{property}', 'i') . }"
     else
       q = "}"
     end

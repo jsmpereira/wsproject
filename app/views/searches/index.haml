@@ -105,11 +105,6 @@
 			No memories found.
 	
 -else 
-	%ul#home
-		%li
-			%span.header=link_to "Browse our database", browse_path
-			%p Find what you want
-	
 	#search
 		=form_tag semantic_path, :method => :get do
 			=default_text_field :sq, "motherboard from Intel"
@@ -117,11 +112,8 @@
 			=submit_tag "Submit"
 	
 	%blockquote
-		Tips: 
+		Semantic Tips: 
 		%ul
-			%li Motherboards
 			%li Motherboard from Intel
-			%li Processors
 			%li Processor socket FM1
-			%li Videocards
 			%li Videocard PCI Express x16

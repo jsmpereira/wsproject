@@ -41,7 +41,7 @@ textarea {border: 1px solid #999; width: 500px; height: 200px}
 	li {display: inline}
 	form {
 		display: inline-block;
-		margin-left: 10em;
+		margin-left: 4em;
 	}
 	a {
 		padding: 1em;
@@ -134,7 +134,7 @@ img.pic {
 }
 
 ul#home {
-	margin-left: 13em;
+	margin: 0 auto;
 	.header {font-size: 15px; font-weight: bold}
 	li {display: inline-block; border: 1px solid #999; padding: 1em; margin: 1em; text-align: center}
 }
