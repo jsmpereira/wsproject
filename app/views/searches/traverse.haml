@@ -1,0 +1,7 @@
+%h1
+	Traverse
+	="(#{@sol.size})"
+	(fulltext search
+	=link_to "browse", browse_path(params.reject{|k, v| k == 'action' || k == 'controller'})
+	
+=render :partial => "result", :object => @sol

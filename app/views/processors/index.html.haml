@@ -16,16 +16,22 @@
 		- @processors.results.each do |member|
 			%tr
 				%td=link_to image_tag (member.image), member, :class => 'thumb'
-				%td=member.brand
+				%td=link_to member.brand, traverse_path(:brand => member.brand, :target => member.class)
 				%td=link_to member.name, member
-				%td=member.cpu_socket
+				%td=link_to member.cpu_socket, traverse_path(:cpu_socket => member.cpu_socket, :target => member.class)
 	=paginate @processors
 
 .third
 	.facets
-		%h3 Browse by Brand
+		%h4 Browse by Brand
 		%ul.facet
 			-for row in @processors.facet(:brand).rows
 				%li
 					= link_to row.value, processors_path(:brand => row.value)
+					="(#{row.count})"
+		%h4 Browse by CPU Socket
+		%ul.facet
+			-for row in @processors.facet(:cpu_socket).rows
+				%li
+					= link_to row.value, processors_path(:cpu_socket => row.value)
 					="(#{row.count})"

@@ -1,3 +1,4 @@
+require 'semantics'
 class VideocardsController < ApplicationController
   # GET /videocards
   # GET /videocards.json
@@ -7,7 +8,9 @@ class VideocardsController < ApplicationController
       order_by :name, :asc
       paginate :page => params[:page], :per_page => 10
       brand_filter = with(:brand, params[:brand]) if params[:brand]
-      facet :brand, :sort => :count, :exclude => brand_filter
+      graph_filter = with(:graph_slot, params[:graph_slot]) if params[:graph_slot]
+      facet :brand, :sort => :count, :exclude => [brand_filter, graph_filter].compact
+      facet :graph_slot, :sort => :count, :exclude => [graph_filter, brand_filter].compact
     end
 
     respond_to do |format|
@@ -23,11 +26,9 @@ class VideocardsController < ApplicationController
     
     Spira.add_repository! :hardware, RDF::Repository.new << RDF::Mongo::Repository.new
     @videocard_rdf = SPARQL.execute("SELECT * WHERE { <#{VideocardRdf.for(@videocard.item).subject.to_s}> ?p ?o }", VideocardRdf.repository)
-    
-    @recommendations_sparql = SPARQL.execute("SELECT * WHERE { ?s <http://www.semanticweb.org/ontologies/2011/10/Ontology1321532209875.owl#hasGraphSlot> \"#{@videocard.graph_slot}\" FILTER (?s != <http://www.semanticweb.org/ontologies/2011/10/Ontology1321532209875.owl#VideoCard/#{@videocard.item.to_s}>) } LIMIT 5", VideocardRdf.repository)
-    
-    @recommendations = @recommendations_sparql.collect {|r| r.s.to_s.split("#")[1].split("/")[0].capitalize.constantize.where(:item => r.s.to_s.split("#")[1].split("/")[1]).first}
 
+    @recommendations = Semantics::Recommendations.new.for_videocard(@videocard)
+    
     respond_to do |format|
       format.html # show.html.erb
       format.json { render :json => @videocard }

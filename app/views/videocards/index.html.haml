@@ -17,16 +17,22 @@
 		- @videocards.results.each do |member|
 			%tr
 				%td=link_to image_tag(member.image), member, :class => 'thumb'
-				%td=member.brand
+				%td=link_to member.brand, traverse_path(:brand => member.brand, :target => member.class)
 				%td=link_to member.name, member
-				%td=member.graph_slot
+				%td=link_to member.graph_slot, traverse_path(:graph_slot => member.graph_slot, :target => member.class)
 	=paginate @videocards
 
 .third
 	.facets
-		%h3 Browse by Brand
+		%h4 Browse by Brand
 		%ul.facet
 			-for row in @videocards.facet(:brand).rows
 				%li
 					= link_to row.value, videocards_path(:brand => row.value)
+					="(#{row.count})"
+		%h4 Browse by Graph Slot
+		%ul.facet
+			-for row in @videocards.facet(:graph_slot).rows
+				%li
+					= link_to row.value, videocards_path(:graph_slot => row.value)
 					="(#{row.count})"

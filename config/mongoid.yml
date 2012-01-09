@@ -8,7 +8,7 @@ defaults: &defaults
 
 development:
   <<: *defaults
-  database: wsproject_development
+  database: wsproject_development_2
 
 test:
   <<: *defaults

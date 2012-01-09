@@ -1,7 +1,7 @@
 %h1
 	Listing
 	-if params[:brand]
-		%span.brand=params[:brand]
+		%span.brand=params[:brand]	
 	motherboards
 	="(#{@motherboards.total})"
 
@@ -19,17 +19,23 @@
 		- @motherboards.results.each do |member|
 			%tr
 				%td=link_to image_tag(member.image), member, :class => 'thumb'
-				%td=member.brand
+				%td=link_to member.brand, traverse_path(:brand => member.brand, :target => member.class)
 				%td=link_to member.name, member
-				%td=member.cpu_socket
-				%td=member.memory_type
-				%td=member.graph_slot
+				%td=link_to member.cpu_socket, traverse_path(:cpu_socket => member.cpu_socket, :target => member.class)
+				%td=link_to simple_format(member.memory_type), traverse_path(:memory_type => member.memory_type, :target => member.class)
+				%td=link_to member.graph_slot, traverse_path(:graph_slot => member.graph_slot, :target => member.class)
 	=paginate @motherboards
 .third
 	.facets
-		%h3 Browse by Brand
+		%h4 Browse by Brand
 		%ul.facet
 			-for row in @motherboards.facet(:brand).rows
 				%li
 					= link_to row.value, motherboards_path(:brand => row.value)
+					="(#{row.count})"
+		%h4 Browse by CPU Socket
+		%ul.facet
+			-for row in @motherboards.facet(:cpu_socket).rows
+				%li
+					= link_to row.value, motherboards_path(:cpu_socket => row.value)
 					="(#{row.count})"

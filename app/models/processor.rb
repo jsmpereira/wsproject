@@ -13,9 +13,9 @@ class Processor < Hardware
   searchable do
     string :name
     string :brand
+    string :cpu_socket
     text :name
     text :item
     text :details
   end
-  
 end

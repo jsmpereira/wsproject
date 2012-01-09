@@ -1,3 +1,4 @@
+require 'semantics'
 class MotherboardsController < ApplicationController
   # GET /motherboards
   # GET /motherboards.json
@@ -7,9 +8,11 @@ class MotherboardsController < ApplicationController
       order_by :name, :asc
       paginate :page => params[:page], :per_page => 10
       brand_filter = with(:brand, params[:brand]) if params[:brand]
-      facet :brand, :sort => :count, :exclude => brand_filter
+      cpu_filter = with(:cpu_socket, params[:cpu_socket]) if params[:cpu_socket]
+      facet :brand, :sort => :count, :exclude => [brand_filter, cpu_filter].compact
+      facet :cpu_socket, :sort => :count, :exclude => [cpu_filter, brand_filter].compact
     end
-
+    
     respond_to do |format|
       format.html # index.html.erb
       format.json { render :json => @motherboards }
@@ -24,10 +27,8 @@ class MotherboardsController < ApplicationController
     Spira.add_repository! :hardware, RDF::Repository.new << RDF::Mongo::Repository.new
     @motherboard_rdf = SPARQL.execute("SELECT * WHERE { <#{MotherboardRdf.for(@motherboard.item).subject.to_s}> ?p ?o }", MotherboardRdf.repository)
     
-    @recommendations_sparql = SPARQL.execute("SELECT * WHERE { ?s <http://www.semanticweb.org/ontologies/2011/10/Ontology1321532209875.owl#hasGraphSlot> \"#{@motherboard.graph_slot}\" FILTER (?s != <http://www.semanticweb.org/ontologies/2011/10/Ontology1321532209875.owl#Motherboard/#{@motherboard.item.to_s}>) } LIMIT 5", MotherboardRdf.repository)
+    @recommendations = Semantics::Recommendations.new.for_motherboard(@motherboard)
     
-    @recommendations = @recommendations_sparql.collect {|r| r.s.to_s.split("#")[1].split("/")[0].capitalize.constantize.where(:item => r.s.to_s.split("#")[1].split("/")[1]).first}
-
     respond_to do |format|
       format.html # show.html.erb
       format.json { render :json => @motherboard }

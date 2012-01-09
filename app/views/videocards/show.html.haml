@@ -19,7 +19,7 @@
 				%td=@videocard.name
 				%tr
 				%td.label Graph Slot
-				%td=@videocard.graph_slot
+				%td=link_to @videocard.graph_slot, traverse_path(:target => @videocard.class, :graph_slot => @videocard.graph_slot)
 	
 	%div#statements_tab.none
 		%h3 Statements

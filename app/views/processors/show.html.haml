@@ -13,13 +13,13 @@
 		%table#details
 			%tr
 				%td.label Brand
-				%td=link_to @processor.brand, browse_path(:target => @processor.class, :brand => @processor.brand)
+				%td=link_to @processor.brand, traverse_path(:target => @processor.class, :brand => @processor.brand)
 				%tr
 				%td.label Model
 				%td=@processor.name
 				%tr
 				%td.label CPU Socket
-				%td=@processor.cpu_socket
+				%td=link_to @processor.cpu_socket, traverse_path(:target => @processor.class, :cpu_socket => @processor.cpu_socket)
 	
 	%div#statements_tab.none
 		%h3 Statements
@@ -43,7 +43,4 @@
 .third
 	=image_tag @processor.image, :class => 'pic'
 
-	#recommendations
-		%h2 Recommendations
-		
-		=render :partial => 'searches/recommendations', :object => @recommendations
+	=render :partial => 'searches/recommendations', :object => @recommendations

@@ -13,6 +13,7 @@ class Videocard < Hardware
   searchable do
     string :name
     string :brand
+    string :graph_slot
     text :name
     text :item
     text :details

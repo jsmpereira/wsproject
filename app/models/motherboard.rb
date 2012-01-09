@@ -14,15 +14,10 @@ class Motherboard < Hardware
   searchable do
     string :name
     string :brand
+    string :cpu_socket
+    string :graph_slot
     text :name
     text :item
     text :details
   end
-
-  #def after_save
-  #  m = MotherboardRdf.new
-  #  m.name = self.name
-  #  m.item = self.item
-  #  m.save!
-  #end
 end

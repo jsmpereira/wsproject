@@ -2,7 +2,7 @@ class SearchesController < ApplicationController
   
   def index
     
-    @target = params[:target]
+    @target = params[:target].downcase if params[:target]
     
     @motherboards_search, @motherboards, @motherboards_search_total = search("motherboard")
     @processors_search, @processors, @processors_search_total = search("processor")
@@ -22,14 +22,17 @@ class SearchesController < ApplicationController
       target = [Motherboard, Processor, Videocard, Memory]
     end
     
+    query = params.reject{|k, v| k == "action" || k == "target" || k == "controller"}.values[0]
+    
     browse = Sunspot.search target do
+      fulltext query
       order_by :name, :asc
       paginate :page => params[:page], :per_page => 15
       brand_filter = with(:brand, params[:brand]) if params[:brand]
       facet :brand, :sort => :count, :exclude => brand_filter
     end
     
-    @results = browse.results
+    @results = browse
     @browse_search = browse
     
     respond_to do |format|
@@ -39,7 +42,7 @@ class SearchesController < ApplicationController
   
   def rdf
 
-    repo = RDF::Repository.new << RDF::Mongo::Repository.new
+    repo = RDF::Mongo::Repository.new
 
     if params[:member] && params[:class]
       @member_query = "select ?s ?p ?o where {<http://www.semanticweb.org/ontologies/2011/10/Ontology1321532209875.owl##{params[:class]}/#{params[:member]}> ?p ?o}"
@@ -65,7 +68,7 @@ class SearchesController < ApplicationController
     tokens = params[:sq].split(" ")
     
     klass = tokens.select{|t| ["motherboard", "processor", "videocard", "memory"].include?(t)}.uniq
-    the_klass = "select * where {?type a <#{klass.first.capitalize}>"
+    the_klass = "select * where {?type a <#{mongo_model_to_spira_model(klass.first)}>"
     
     if tokens.include?("from")
       property = params[:sq].split("from")[1].split(" ")[0]
@@ -74,7 +77,7 @@ class SearchesController < ApplicationController
       q = "}"
     end
     
-    repo = RDF::Repository.new << RDF::Mongo::Repository.new
+    repo = RDF::Mongo::Repository.new
      
     @semantic_query = the_klass + q
     
@@ -92,7 +95,7 @@ class SearchesController < ApplicationController
   def sparql
     
     if params[:query]
-      repo = RDF::Repository.new << RDF::Mongo::Repository.new
+      repo = RDF::Mongo::Repository.new
       @results = SPARQL.execute(params[:query], repo)
     end
 
@@ -101,11 +104,44 @@ class SearchesController < ApplicationController
     end
   end
   
+  def traverse
+    
+    target = params[:target].constantize
+    if params[:brand]
+      rel = "#hasBrand"
+      obj = params[:brand]
+    elsif params[:graph_slot]
+      rel = "#hasGraphSlot"
+      obj = params[:graph_slot]
+    elsif params[:cpu_socket]
+      rel = "#hasCpuSocket"
+      obj = params[:cpu_socket] 
+    elsif params[:memory_type]
+      rel = "#hasMemoryType"
+      obj = params[:memory_type]
+    elsif params[:speed]
+      rel = "#hasSpeed"
+      obj = params[:speed]
+    elsif params[:capacity]
+      rel = "#hasCapacity"
+      obj = params[:capacity]
+    end
+    
+    result = SPARQL.execute("SELECT * WHERE { ?s <http://www.semanticweb.org/ontologies/2011/10/Ontology1321532209875.owl#{rel}> \"#{obj}\"}", RDF::Mongo::Repository.new)
+    
+    @sol = target.where(:item.in => result.collect{|m| rdf_to_mongo_id(m.s)})
+    
+    respond_to do |format|
+      format.html {  }
+    end
+  end
+  
   private
   
   def search(content)
     
     if @target.blank? || @target.include?(content)
+      logger.debug "PORRA #{content.inspect} : #{@target.inspect} #{params[:q]}"
       search = content.capitalize.constantize.search do
         fulltext (params[:q] == "Search everything ..." ? "" : params[:q])
         order_by :name, :asc

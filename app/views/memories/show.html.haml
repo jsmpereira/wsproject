@@ -13,19 +13,19 @@
 		%table#details
 			%tr
 				%td.label Brand
-				%td=link_to @memory.brand, browse_path(:target => @memory.class, :brand => @memory.brand)
+				%td=link_to @memory.brand, traverse_path(:target => @memory.class, :brand => @memory.brand)
 				%tr
 				%td.label Model
 				%td=@memory.name
 				%tr
 				%td.label Speed
-				%td=@memory.speed
+				%td=link_to @memory.speed, traverse_path(:target => @memory.class, :speed => @memory.speed)
 				%tr
 				%td.label Memory Type
-				%td=@memory.memory_type
+				%td=link_to @memory.memory_type, traverse_path(:target => @memory.class, :memory_type => @memory.memory_type)
 				%tr
 				%td.label Capacity
-				%td=@memory.capacity
+				%td=link_to @memory.capacity, traverse_path(:target => @memory.class, :capacity => @memory.capacity)
 	
 	%div#statements_tab.none
 		%h3 Statements

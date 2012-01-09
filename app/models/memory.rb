@@ -15,6 +15,7 @@ class Memory < Hardware
   searchable do
     string :name
     string :brand
+    string :speed
     text :name
     text :item
     text :details

@@ -1,14 +1,17 @@
-%h1 Browse
+%h1
+	Browse
+	="(#{@results.total})"
 	
-=render :partial => "result", :object => @results
+=render :partial => "result", :object => @results.results
 
-.facets
-	%h3 Browse by Brand
-	%ul.facet
-		-for row in @browse_search.facet(:brand).rows
-			%li
-				= link_to row.value, browse_path(:brand => row.value)
-				= row.count
+-if !params[:target]
+	.facets
+		%h3 Browse by Brand
+		%ul.facet
+			-for row in @browse_search.facet(:brand).rows
+				%li
+					= link_to row.value, browse_path(:brand => row.value)
+					= row.count
 
 %br.clear
 =paginate @browse_search

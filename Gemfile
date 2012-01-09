@@ -30,7 +30,7 @@ gem 'kaminari'
 
 gem 'rdf'
 gem 'rdf-rdfxml', :require => 'rdf/rdfxml'
-gem 'rdf-mongo'
+gem 'rdf-mongo', '~> 0.3.0', :path => 'vendor/gems/rdf-mongo', :branch => '0.3.0'
 gem 'sparql'
 gem 'spira'
 
