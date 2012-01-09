@@ -16,6 +16,8 @@ class Processor < Hardware
     string :cpu_socket
     text :name
     text :item
+    text :brand
+    text :cpu_socket
     text :details
   end
 end

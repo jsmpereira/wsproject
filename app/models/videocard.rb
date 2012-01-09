@@ -15,6 +15,8 @@ class Videocard < Hardware
     string :brand
     string :graph_slot
     text :name
+    text :brand
+    text :graph_slot
     text :item
     text :details
   end

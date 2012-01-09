@@ -18,6 +18,9 @@ class Motherboard < Hardware
     string :graph_slot
     text :name
     text :item
+    text :brand
+    text :graph_slot
+    text :memory_type
     text :details
   end
 end

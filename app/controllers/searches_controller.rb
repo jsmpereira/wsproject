@@ -4,10 +4,12 @@ class SearchesController < ApplicationController
     
     @target = params[:target].downcase if params[:target]
     
-    @motherboards_search, @motherboards, @motherboards_search_total = search("motherboard")
-    @processors_search, @processors, @processors_search_total = search("processor")
-    @videocards_search, @videocards, @videocards_search_total = search("videocard")
-    @memories_search, @memories, @memories_search_total = search("memory")
+    if params[:q]
+      @motherboards_search, @motherboards, @motherboards_search_total = search("motherboard")
+      @processors_search, @processors, @processors_search_total = search("processor")
+      @videocards_search, @videocards, @videocards_search_total = search("videocard")
+      @memories_search, @memories, @memories_search_total = search("memory")
+    end
     
     respond_to do |format|
       format.html {  }
@@ -65,14 +67,26 @@ class SearchesController < ApplicationController
   
   def semantic
 
-    tokens = params[:sq].split(" ")
+    query = params[:sq]
+
+    tokens = query.split(" ").map(&:singularize).map(&:downcase)
     
     klass = tokens.select{|t| ["motherboard", "processor", "videocard", "memory"].include?(t)}.uniq
     the_klass = "select * where {?type a <#{mongo_model_to_spira_model(klass.first)}>"
     
     if tokens.include?("from")
-      property = params[:sq].split("from")[1].split(" ")[0]
-      q = " ; <http://www.semanticweb.org/ontologies/2011/10/Ontology1321532209875.owl#hasBrand> \"#{property}\"}"
+      property = query.split("from")[1].split(" ")[0].capitalize
+      q = "; <http://www.semanticweb.org/ontologies/2011/10/Ontology1321532209875.owl#hasBrand> \"#{property}\"}"
+    elsif tokens.include?("for")
+      property = query.split("for")[1].split(" ")[0]
+      q = "; <http://www.semanticweb.org/ontologies/2011/10/Ontology1321532209875.owl#hasMemoryType> \"#{property}\"}"
+    elsif tokens.include?("socket")
+      property = query.split("socket")[1].split(" ")[0]
+      q = "; <http://www.semanticweb.org/ontologies/2011/10/Ontology1321532209875.owl#hasCpuSocket> \"#{property}\"}"
+    elsif tokens.include?("pci")
+      logger.debug "COISO #{query.inspect}"
+      property = query.split("PCI")[1].strip.map(&:capitalize)
+      q = "; <http://www.semanticweb.org/ontologies/2011/10/Ontology1321532209875.owl#hasGraphSlot> \"PCI #{property}\"}"
     else
       q = "}"
     end
@@ -81,7 +95,7 @@ class SearchesController < ApplicationController
      
     @semantic_query = the_klass + q
     
-    logger.debug @semantic_query.inspect
+    logger.debug "SEMANTIC #{@semantic_query.inspect}"
     @semantic_result = SPARQL.execute(@semantic_query, repo)
     
     @results = @semantic_result.collect {|r| r.type.to_s.split("#")[1].split("/")[0].capitalize.constantize.where(:item => r.type.to_s.split("#")[1].split("/")[1]).first}
@@ -141,9 +155,8 @@ class SearchesController < ApplicationController
   def search(content)
     
     if @target.blank? || @target.include?(content)
-      logger.debug "PORRA #{content.inspect} : #{@target.inspect} #{params[:q]}"
       search = content.capitalize.constantize.search do
-        fulltext (params[:q] == "Search everything ..." ? "" : params[:q])
+        fulltext (params[:q] == "Search everything ..." ? "" : params[:q].split(" "))
         order_by :name, :asc
         paginate :page => params[content+"_page".to_s], :per_page => 10
         brand_filter = with(:brand, params[:brand]) if params[:brand]

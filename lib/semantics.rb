@@ -100,8 +100,6 @@ module Semantics
       
       recommendations_processors = SPARQL.execute("SELECT * WHERE { ?s a <#{ProcessorRdf.type}> . ?s <http://www.semanticweb.org/ontologies/2011/10/Ontology1321532209875.owl#hasCpuSocket> \"#{motherboard.cpu_socket}\"}", repository)
       
-      puts "PORRA #{recommendations_processors.inspect}"
-      
       recommendations = recommendations_motherboards.collect {|r| rdf_to_mongo_model(r.s).where(:item => rdf_to_mongo_id(r.s)).first}.shuffle[0..2] + recommendations_memories.collect {|r| rdf_to_mongo_model(r.s).where(:item => rdf_to_mongo_id(r.s)).first}.shuffle[0..1] + recommendations_videocards.collect {|r| rdf_to_mongo_model(r.s).where(:item => rdf_to_mongo_id(r.s)).first}.shuffle[0..1] + recommendations_processors.collect {|r| rdf_to_mongo_model(r.s).where(:item => rdf_to_mongo_id(r.s)).first}.shuffle[0..1]
     end
     

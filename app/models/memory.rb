@@ -18,6 +18,10 @@ class Memory < Hardware
     string :speed
     text :name
     text :item
+    text :brand
+    text :speed
+    text :capacity
+    text :memory_type
     text :details
   end
 end
